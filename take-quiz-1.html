@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Am I Imagining This? — The Daily Oracle</title>
+  <meta name="description" content="Quiz 01: Am I Imagining This, or Is Something Actually Wrong?" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+
+    /* ── Shell ────────────────────────────────────────── */
+    .quiz-shell {
+      min-height: calc(100vh - 60px);
+      display: flex;
+      flex-direction: column;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Top bar ─────────────────────────────────────── */
+    .quiz-top {
+      padding: 28px 0 0;
+      flex-shrink: 0;
+    }
+    .q-track {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .q-fill {
+      position: absolute;
+      left: 0; top: 0; height: 100%;
+      background: var(--mauve);
+      transition: width 0.4s ease;
+    }
+    .q-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0;
+    }
+    .q-section-tag {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mauve-dark);
+    }
+    .q-counter {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ── Intro screen ────────────────────────────────── */
+    .intro-screen {
+      min-height: calc(100vh - 60px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+    .intro-inner {
+      max-width: 520px;
+      width: 100%;
+      animation: qFadeIn 0.35s ease both;
+    }
+    .intro-eyebrow {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mauve-dark);
+      margin-bottom: 12px;
+    }
+    .intro-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 5vw, 2.2rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--purple-deep);
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+    .intro-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+    .intro-rule {
+      width: 36px; height: 1px;
+      background: var(--mauve); opacity: 0.6;
+      margin-bottom: 24px;
+    }
+    .intro-desc {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .intro-instruction {
+      background: var(--purple-mid);
+      color: var(--text-light);
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-bottom: 32px;
+      box-shadow:
+        0 4px 0 rgba(59,63,36,0.35),
+        0 12px 32px rgba(0,0,0,0.1);
+    }
+    .intro-instruction strong {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mauve-light);
+      margin-bottom: 10px;
+    }
+    .intro-instruction p {
+      font-size: 0.87rem;
+      line-height: 1.75;
+      color: rgba(247,243,236,0.85);
+      margin-bottom: 8px;
+    }
+    .intro-instruction p:last-child { margin-bottom: 0; }
+    .btn-begin {
+      background: var(--mauve);
+      color: #2A2D18;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 36px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s;
+      width: 100%;
+    }
+    .btn-begin:hover { background: var(--mauve-dark); color: var(--text-light); }
+
+    /* ── Question body ───────────────────────────────── */
+    .quiz-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 36px 0 28px;
+    }
+    .q-card {
+      background: #FBF9F5;
+      border-radius: 16px;
+      padding: 36px 28px 32px;
+      box-shadow:
+        0 8px 0 #d4cbb8,
+        0 24px 56px rgba(0,0,0,0.09);
+      animation: qFadeIn 0.28s ease both;
+    }
+    .q-card.q-leaving {
+      animation: qFadeOut 0.18s ease both;
+    }
+    @keyframes qFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes qFadeOut {
+      from { opacity: 1; transform: none; }
+      to   { opacity: 0; transform: translateY(-6px); }
+    }
+
+    .q-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.35rem, 4.5vw, 1.75rem);
+      color: #2A2D18;
+      line-height: 1.45;
+      font-weight: 400;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    /* ── Answer options ──────────────────────────────── */
+    .q-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    @media (min-width: 500px) {
+      .q-options { grid-template-columns: repeat(4, 1fr); }
+    }
+    .q-opt {
+      border: 1px solid rgba(59,63,36,0.22);
+      border-radius: 8px;
+      padding: 13px 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      color: #2A2D18;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      text-align: center;
+      line-height: 1.35;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 0 rgba(59,63,36,0.3), 0 6px 16px rgba(0,0,0,0.07);
+    }
+    /* Graduated opacity — scale builds from transparent to full olive */
+    .q-opt-0 { background: rgba(59,63,36,0); }
+    .q-opt-1 { background: rgba(59,63,36,0.33); }
+    .q-opt-2 { background: rgba(59,63,36,0.66); color: var(--text-light); }
+    .q-opt-3 { background: rgba(59,63,36,1); color: var(--text-light); }
+    .q-opt:hover:not(.selected) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 rgba(59,63,36,0.3), 0 10px 22px rgba(0,0,0,0.1);
+    }
+    .q-opt:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(59,63,36,0.3); }
+    .q-opt.selected {
+      background: #3B3F24 !important;
+      border-color: #3B3F24 !important;
+      color: var(--text-light) !important;
+      font-weight: 500;
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 rgba(59,63,36,0.4), inset 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    /* ── Navigation ──────────────────────────────────── */
+    .quiz-nav {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 0 40px;
+      border-top: 1px solid var(--border);
+    }
+    .q-arrow {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-mid);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: border-color 0.14s, color 0.14s, background 0.14s;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .q-arrow:hover:not(:disabled) {
+      border-color: var(--purple-mid);
+      color: var(--purple-mid);
+    }
+    .q-arrow:disabled {
+      opacity: 0.2;
+      cursor: default;
+    }
+    .q-nav-center {
+      text-align: center;
+      flex: 1;
+      padding: 0 20px;
+    }
+    .q-nav-num {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .q-nav-total {
+      color: var(--border-strong);
+    }
+    .btn-see-results {
+      background: var(--purple-mid);
+      color: var(--text-light);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: background 0.14s;
+    }
+    .btn-see-results:hover { background: var(--purple-accent); }
+
+    /* ── Gate / Used screens ─────────────────────────── */
+    .solo-screen {
+      min-height: calc(100vh - 60px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+    .solo-inner {
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+    .solo-label {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mauve-dark);
+      margin-bottom: 16px;
+    }
+    .solo-inner h2 {
+      font-size: clamp(1.2rem, 4vw, 1.55rem);
+      color: var(--purple-deep);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+    .solo-inner p {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+
+    /* ── Complete screen ──────────────────────────────── */
+    .complete-screen {
+      min-height: calc(100vh - 60px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+    .complete-inner {
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      animation: qFadeIn 0.3s ease both;
+    }
+    .complete-label {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mauve-dark);
+      margin-bottom: 20px;
+    }
+    .complete-inner h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      font-weight: 400;
+      color: var(--purple-deep);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .complete-inner p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+    .btn-generate-final {
+      background: var(--purple-mid);
+      color: var(--text-light);
+      border: none;
+      border-radius: 8px;
+      padding: 14px 36px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: block;
+      width: 100%;
+      margin-bottom: 14px;
+    }
+    .btn-generate-final:hover { background: var(--purple-accent); }
+    .btn-review-link {
+      background: none;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ── Results ─────────────────────────────────────── */
+    .results-wrap {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+      animation: qFadeIn 0.35s ease both;
+    }
+    .result-eyebrow {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mauve-dark);
+      margin-bottom: 8px;
+    }
+    .result-num {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .result-title {
+      font-size: clamp(1.4rem, 5vw, 2.1rem);
+      color: var(--purple-deep);
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    .result-rule {
+      width: 36px; height: 1px;
+      background: var(--mauve);
+      opacity: 0.7;
+      margin-bottom: 28px;
+    }
+    .result-body {
+      font-size: 0.93rem;
+      color: var(--text);
+      line-height: 1.85;
+    }
+    .result-body p { margin-bottom: 18px; }
+    .result-body em { font-style: italic; }
+    .result-next-block {
+      margin-top: 40px;
+      padding: 28px 24px;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--mauve);
+    }
+    .result-next-label {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mauve-dark);
+      margin-bottom: 12px;
+    }
+    .result-next-block p {
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+    .result-disclaimer {
+      margin-top: 40px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      font-style: italic;
+      line-height: 1.7;
+    }
+    .result-footer-links {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .result-footer-links a {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ── Secondary / blended result ──────────────────── */
+    .result-secondary-block {
+      margin-top: 28px;
+      padding: 22px 24px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: var(--bg-white);
+    }
+    .result-secondary-label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .result-secondary-title {
+      font-size: 1.0rem;
+      color: var(--purple-deep);
+      margin-bottom: 10px;
+      font-weight: 400;
+      font-family: 'Cormorant Garamond', serif;
+      line-height: 1.3;
+    }
+    .result-secondary-body {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html"><img src="assets/web images/Daily Oracle Web Logo Transparent 2.png" alt="The Daily Oracle" class="nav-logo"></a>
+  </nav>
+
+  <div id="root"></div>
+
+  <footer class="footer" id="site-footer" style="display:none">
+    <p>© 2026 The Daily Oracle. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="index.html">Store</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+      <a href="support.html">Support</a>
+      <a href="account-deletion.html">Account Deletion</a>
+    </div>
+  </footer>
+
+<script>
+// ─── Quiz data ────────────────────────────────────────────────────────────────
+
+const QUIZ_TITLE = 'Am I Imagining This, or Is Something Actually Wrong?';
+
+const questions = [
+  // Section 01
+  { s: 'Section 01 · Internal Experience', t: 'After interactions with this person, do you feel more confused than before?' },
+  { s: 'Section 01 · Internal Experience', t: 'Do you replay conversations in your head trying to work out what just happened?' },
+  { s: 'Section 01 · Internal Experience', t: 'Do you trust your own memory and judgment less than you used to?' },
+  { s: 'Section 01 · Internal Experience', t: 'Do you feel like you\'re constantly explaining yourself but never feeling understood?' },
+  { s: 'Section 01 · Internal Experience', t: 'Do you leave interactions feeling like you did something wrong, even when you can\'t name what?' },
+  // Section 02
+  { s: 'Section 02 · Communication Patterns', t: 'When you raise concerns, are they dismissed, minimised, or turned back on you?' },
+  { s: 'Section 02 · Communication Patterns', t: 'Has this person told you something didn\'t happen the way you remember it — and made you doubt yourself?' },
+  { s: 'Section 02 · Communication Patterns', t: 'Are your emotional reactions framed as the real problem?' },
+  { s: 'Section 02 · Communication Patterns', t: 'Do apologies, if they happen, feel vague, conditional, performative, or short-lived?' },
+  { s: 'Section 02 · Communication Patterns', t: 'Do conversations about issues go in circles without resolution?' },
+  // Section 03
+  { s: 'Section 03 · Push–Pull & Emotional Bonding', t: 'Are there periods where this person is warm, attentive, or remorseful, followed by withdrawal or criticism?' },
+  { s: 'Section 03 · Push–Pull & Emotional Bonding', t: 'Do you feel relieved when things are "good again," even though nothing has actually changed?' },
+  { s: 'Section 03 · Push–Pull & Emotional Bonding', t: 'Do you find yourself holding onto who they can be rather than who they consistently are?' },
+  { s: 'Section 03 · Push–Pull & Emotional Bonding', t: 'Does the idea of leaving feel harder than it logically should?' },
+  { s: 'Section 03 · Push–Pull & Emotional Bonding', t: 'Do you feel emotionally hooked despite knowing something isn\'t right?' },
+  // Section 04
+  { s: 'Section 04 · Power & Reality', t: 'Does this person tend to treat their perspective as the accurate, more rational, or more mature one?' },
+  { s: 'Section 04 · Power & Reality', t: 'Are your needs framed as excessive, selfish, or unreasonable?' },
+  { s: 'Section 04 · Power & Reality', t: 'Do you find yourself adjusting your behaviour to avoid conflict or fallout?' },
+  { s: 'Section 04 · Power & Reality', t: 'Has your version of reality been repeatedly questioned or reframed?' },
+  { s: 'Section 04 · Power & Reality', t: 'Do you feel you\'ve lost parts of yourself over time?' },
+  // Section 05
+  { s: 'Section 05 · Orientation Check', t: 'Do you feel clearer and more grounded when you spend time away from this person?' },
+  { s: 'Section 05 · Orientation Check', t: 'If a close friend described this relationship to you, would you be concerned?' },
+];
+
+const OPTIONS = ['No / Rarely', 'Sometimes', 'Often', 'Almost Always'];
+
+// ─── Results ──────────────────────────────────────────────────────────────────
+
+const RESULTS = {
+  r1: {
+    num: 'Result 01', title: 'You\'re Caught in a Confusion Loop',
+    body: `<p>This result suggests you may be caught in a dynamic where your perception has been repeatedly disrupted over time.</p>
+<p>Rather than clear conflict or obvious cruelty, the defining feature here is <em>confusion</em>. Moments of clarity are often followed by self-doubt. You may feel pulled between what you sense is true and what you're told is happening.</p>
+<p>This kind of loop doesn't form because someone is weak or naive. It forms when insight, explanation, or emotional connection is offered just enough to keep hope alive, but never enough to create lasting resolution.</p>
+<p>Many people in this dynamic describe feeling mentally exhausted, second-guessing themselves, and wondering why things that seem simple never quite settle.</p>
+<p>What you're experiencing has a name — <em>reality distortion</em> — and naming it is often the first moment where the fog begins to lift.</p>`,
+    next: `<em>A Field Guide to Reality Distortion</em> is the next part of this journey. It walks you through the eight mechanisms that produce this kind of confusion, named one by one, so you can see what's been happening underneath your interactions. Most people read it and feel something settle for the first time in a long while.`,
+    short: `Your responses also reflect the confusion pattern — difficulty feeling understood, self-doubt that resurfaces after interactions, and a fog that doesn't fully lift even when things seem calm on the surface.`
+  },
+  r2: {
+    num: 'Result 02', title: 'You May Be Bonded to Inconsistency',
+    body: `<p>This result points to a relationship dynamic shaped by inconsistency.</p>
+<p>Periods of warmth, connection, remorse, or closeness may be followed by withdrawal, criticism, or emotional distance. When things are "good," they feel meaningful and relieving. When they're not, you may find yourself waiting for the good version to return.</p>
+<p>The nervous system learns to stay alert, hopeful, and invested. Not because you've chosen to. Because that's how attachment works under conditions of unpredictability.</p>
+<p>People in this dynamic often know something isn't right, yet feel unusually attached, loyal, or unable to disengage without distress.</p>
+<p>Understanding this pattern can explain why leaving, pulling back, or emotionally detaching feels far harder than logic alone would suggest.</p>`,
+    next: `<em>A Field Guide to Reality Distortion</em> has a chapter on exactly this — <em>The Bond That Forms Without Your Consent</em> — that explains the neuroscience of why this attachment is so strong, and why it loosens not through force, but through accuracy.`,
+    short: `Your responses also point to the pull of an intermittent dynamic — the genuine relief when things feel good, and the difficulty disengaging even when part of you knows something isn't right.`
+  },
+  r3: {
+    num: 'Result 03', title: 'You May Be Inside a Reality Distortion Pattern',
+    body: `<p>This result suggests a dynamic where power, authority, or control over the narrative plays a significant role.</p>
+<p>You may notice that your needs are regularly reframed as unreasonable, your reactions are treated as the real issue, or your version of events is subtly overridden. Over time, this can lead to adjusting yourself to maintain peace or avoid fallout.</p>
+<p>This pattern isn't always loud or overt. It often shows up as one person positioning themselves as more rational, evolved, or reasonable, while the other slowly becomes less confident in their own perspective.</p>
+<p>People in this dynamic frequently feel smaller, quieter, or less sure of themselves than they once were.</p>`,
+    next: `<em>A Field Guide to Reality Distortion</em> is where this gets unpacked properly. It names the specific mechanisms that produce this kind of dynamic — how meaning gets controlled, how your reality gets quietly overridden, and what shifts when you stop trying to be understood by someone whose understanding was never the goal.`,
+    short: `Your responses also point to a power dimension — where your needs have been framed as unreasonable, or your version of events quietly repositioned over time.`
+  },
+  r4: {
+    num: 'Result 04', title: 'What You\'re Describing Doesn\'t Strongly Match This Pattern',
+    body: `<p>This result suggests that, based on your responses, the patterns measured in this quiz aren't strongly present.</p>
+<p>That doesn't mean your relationship is perfect, or that there are no challenges worth addressing. All relationships involve conflict, miscommunication, and moments of hurt.</p>
+<p>What's important here is that this result doesn't point to a sustained dynamic of confusion, erosion of self-trust, or reality disruption over time.</p>
+<p>It may be worth exploring what's making things feel unsettled — not every difficult relationship fits a single pattern, and that clarity has value too.</p>`,
+    next: `If you'd like to read more about the patterns this quiz was screening for — even just to rule them out with a clearer lens — <em>A Field Guide to Reality Distortion</em> walks through them in detail. It's also useful for understanding dynamics you may be witnessing in other relationships around you, even if they aren't your own.`,
+    short: null
+  },
+};
+
+// ─── State ─────────────────────────────────────────────────────────────────────
+
+let appState = 'intro'; // gate | used | intro | quiz | complete | results
+let currentIdx = 0;
+let maxReached = 0;
+let answers = {};
+
+// ─── Access ────────────────────────────────────────────────────────────────────
+
+const TOKEN_KEY = 'dq_quiz1_access';
+const PURCHASE_URL = 'https://buy.stripe.com/cNi00k0qB7J866U5iVdfG06';
+
+function getAccess() { try { return JSON.parse(localStorage.getItem(TOKEN_KEY)); } catch { return null; } }
+function hasValidAccess() { const a = getAccess(); return a && a.granted && !a.used; }
+function hasUsedAccess() { const a = getAccess(); return a && a.used; }
+function grantAccess() { try { localStorage.setItem(TOKEN_KEY, JSON.stringify({ granted: true, used: false, ts: Date.now() })); } catch {} }
+function consumeAccess() { const a = getAccess(); if (a) { a.used = true; localStorage.setItem(TOKEN_KEY, JSON.stringify(a)); } }
+
+// ─── Scoring ───────────────────────────────────────────────────────────────────
+
+function computeResult() {
+  let s0=0,s1=0,s2=0,s3=0;
+  for (let i=0;i<5;i++)  s0 += (answers[i]??0);
+  for (let i=5;i<10;i++) s1 += (answers[i]??0);
+  for (let i=10;i<15;i++) s2 += (answers[i]??0);
+  for (let i=15;i<20;i++) s3 += (answers[i]??0);
+  const total = s0+s1+s2+s3+(answers[20]??0)+(answers[21]??0);
+
+  if (total <= 22) return { primary: 'r4', secondary: null };
+
+  // Normalise each result domain to a 0–1 score relative to its maximum
+  // r1 draws from two sections (Internal + Communication) → max 30
+  // r2 draws from Push-Pull section → max 15
+  // r3 draws from Power & Reality section → max 15
+  const ranked = [
+    { key: 'r1', pct: (s0 + s1) / 30 },
+    { key: 'r2', pct: s2 / 15 },
+    { key: 'r3', pct: s3 / 15 },
+  ].sort((a, b) => b.pct - a.pct);
+
+  // Secondary shown when top two are within 15 percentage points of each other
+  const gap = ranked[0].pct - ranked[1].pct;
+  return {
+    primary:   ranked[0].key,
+    secondary: gap <= 0.15 ? ranked[1].key : null,
+  };
+}
+
+// ─── Navigation ────────────────────────────────────────────────────────────────
+
+function canGoFwd() {
+  if (currentIdx >= questions.length - 1) return answers[currentIdx] !== undefined;
+  return (currentIdx + 1) <= maxReached;
+}
+
+function selectAnswer(optIdx) {
+  // immediate DOM feedback — no full re-render
+  document.querySelectorAll('.q-opt').forEach((b,i) => b.classList.toggle('selected', i === optIdx));
+  answers[currentIdx] = optIdx;
+  maxReached = Math.max(maxReached, currentIdx + 1);
+
+  // update forward button state
+  const fwd = document.getElementById('btn-fwd');
+  if (fwd) fwd.disabled = !canGoFwd();
+
+  const isLast = currentIdx === questions.length - 1;
+  if (isLast) {
+    // show "See Results" in nav center
+    const nc = document.getElementById('nav-center');
+    if (nc) nc.innerHTML = `<button class="btn-see-results" onclick="goComplete()">See Results</button>`;
+  } else {
+    // auto-advance
+    setTimeout(goForward, 360);
+  }
+}
+
+function goBack() {
+  if (currentIdx <= 0) return;
+  navigateTo(currentIdx - 1);
+}
+
+function goForward() {
+  if (!canGoFwd()) return;
+  if (currentIdx >= questions.length - 1) { goComplete(); return; }
+  navigateTo(currentIdx + 1);
+}
+
+function goComplete() {
+  appState = 'complete';
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBackToQuiz() {
+  appState = 'quiz';
+  currentIdx = questions.length - 1;
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function navigateTo(newIdx) {
+  const card = document.getElementById('q-card');
+  if (card) {
+    card.classList.add('q-leaving');
+    setTimeout(() => {
+      currentIdx = newIdx;
+      maxReached = Math.max(maxReached, currentIdx);
+      renderQuiz();
+    }, 180);
+  } else {
+    currentIdx = newIdx;
+    renderQuiz();
+  }
+}
+
+function generateResults() {
+  if (!hasValidAccess()) { appState = 'gate'; render(); return; }
+  consumeAccess();
+  appState = 'results';
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('site-footer').style.display = '';
+}
+
+// ─── Renderers ─────────────────────────────────────────────────────────────────
+
+function render() {
+  if (appState === 'quiz') { renderQuiz(); return; }
+  const root = document.getElementById('root');
+  if (appState === 'intro')    root.innerHTML = renderIntro();
+  if (appState === 'gate')     root.innerHTML = renderGate();
+  if (appState === 'used')     root.innerHTML = renderUsed();
+  if (appState === 'complete') root.innerHTML = renderComplete();
+  if (appState === 'results')  root.innerHTML = renderResultsHTML();
+}
+
+function renderIntro() {
+  return `<div class="intro-screen">
+    <div class="intro-inner">
+      <p class="intro-eyebrow">Quiz 01</p>
+      <h1 class="intro-title">Am I Imagining This, or Is Something Actually Wrong?</h1>
+      <p class="intro-meta">22 questions · 10–15 minutes</p>
+      <div class="intro-rule"></div>
+      <p class="intro-desc">This quiz is designed to help you make sense of a relationship dynamic that feels confusing, unsettling, or hard to name. It looks at patterns across four areas: how you feel after interactions, how concerns are handled, emotional bonding cycles, and the balance of power and perspective.</p>
+      <div class="intro-instruction">
+        <strong>Before You Begin</strong>
+        <p>Answer each question based on one specific relationship — a partner, family member, close friend, or colleague. Choose the person the relationship with whom prompted you to take this quiz.</p>
+        <p>Answer honestly based on your lived experience, not how you wish things were or think they should be. There are no right or wrong answers.</p>
+      </div>
+      <button class="btn-begin" onclick="beginQuiz()">Begin Quiz →</button>
+    </div>
+  </div>`;
+}
+
+function beginQuiz() {
+  appState = 'quiz';
+  render();
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+function renderQuiz() {
+  const q = questions[currentIdx];
+  const pct = Math.round((currentIdx / questions.length) * 100);
+  const sel = answers[currentIdx];
+  const isLast = currentIdx === questions.length - 1;
+  const canFwd = canGoFwd();
+
+  document.getElementById('root').innerHTML = `
+    <div class="quiz-shell">
+      <div class="quiz-top">
+        <div class="q-track"><div class="q-fill" style="width:${pct}%"></div></div>
+        <div class="q-meta-row">
+          <span class="q-section-tag">${q.s}</span>
+          <span class="q-counter">${currentIdx + 1} / ${questions.length}</span>
+        </div>
+      </div>
+
+      <div class="quiz-body">
+        <div class="q-card" id="q-card">
+          <p class="q-text">${q.t}</p>
+          <div class="q-options">
+            ${OPTIONS.map((opt,i) => `<button class="q-opt q-opt-${i}${sel===i?' selected':''}" onclick="selectAnswer(${i})">${opt}</button>`).join('')}
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-nav">
+        <button class="q-arrow" id="btn-back" onclick="goBack()" ${currentIdx > 0 ? '' : 'disabled'} aria-label="Previous question">←</button>
+        <div class="q-nav-center" id="nav-center">
+          ${isLast && sel !== undefined
+            ? `<button class="btn-see-results" onclick="goComplete()">See Results</button>`
+            : `<span class="q-nav-num">${currentIdx + 1}<span class="q-nav-total"> / ${questions.length}</span></span>`
+          }
+        </div>
+        <button class="q-arrow" id="btn-fwd" onclick="goForward()" ${canFwd ? '' : 'disabled'} aria-label="Next question">→</button>
+      </div>
+    </div>`;
+}
+
+function renderGate() {
+  return `<div class="solo-screen"><div class="solo-inner">
+    <p class="solo-label">Access Required</p>
+    <h2>Purchase this quiz to begin</h2>
+    <p>Each purchase includes one result generation. Secure checkout via Stripe — you'll be brought straight back here to start.</p>
+    <a href="${PURCHASE_URL}" class="btn btn-primary" style="display:inline-flex;margin-bottom:16px">Get the Quiz — $7</a>
+  </div></div>`;
+}
+
+function renderUsed() {
+  return `<div class="solo-screen"><div class="solo-inner">
+    <p class="solo-label">Quiz Complete</p>
+    <h2>You've already generated your results</h2>
+    <p>Each purchase includes one result generation. If you'd like to retake the quiz with a fresh result, you're welcome to purchase again.</p>
+    <a href="${PURCHASE_URL}" class="btn btn-outline" style="display:inline-flex;margin-bottom:16px">Purchase Again</a>
+    <br><a href="index.html" style="font-size:0.78rem;color:var(--text-muted);text-decoration:underline;text-underline-offset:3px">← Browse all resources</a>
+  </div></div>`;
+}
+
+function renderComplete() {
+  return `<div class="complete-screen"><div class="complete-inner">
+    <p class="complete-label">Quiz 01 · Complete</p>
+    <h2>All ${questions.length} questions answered.</h2>
+    <p>When you're ready, generate your results.<br>This uses your one-time result credit.</p>
+    <button class="btn-generate-final" onclick="generateResults()">Generate My Results</button>
+    <button class="btn-review-link" onclick="goBackToQuiz()">← Review my answers</button>
+  </div></div>`;
+}
+
+function renderResultsHTML() {
+  const { primary, secondary } = computeResult();
+  const r   = RESULTS[primary];
+  const sec = secondary ? RESULTS[secondary] : null;
+  const hasBlend = sec && sec.short;
+
+  return `<div class="results-wrap">
+    <p class="result-eyebrow">Your Results</p>
+    <p class="result-num">${hasBlend ? 'Primary · ' : ''}${r.num}</p>
+    <h2 class="result-title">${r.title}</h2>
+    <div class="result-rule"></div>
+    <div class="result-body">${r.body}</div>
+    ${hasBlend ? `
+    <div class="result-secondary-block">
+      <p class="result-secondary-label">Also present · ${sec.num}</p>
+      <h3 class="result-secondary-title">${sec.title}</h3>
+      <p class="result-secondary-body">${sec.short}</p>
+    </div>` : ''}
+    <div class="result-next-block">
+      <p class="result-next-label">Next Step</p>
+      <p>${r.next}</p>
+      <a href="index.html#guides" class="btn btn-primary" style="display:inline-flex;font-size:0.8rem">Get the Guide →</a>
+    </div>
+    <p class="result-disclaimer">This quiz is for educational and self-reflection purposes only. It does not constitute a clinical diagnosis or professional assessment. If you are experiencing distress, please seek support from a qualified mental health professional.</p>
+    <div class="result-footer-links">
+      <a href="index.html">← Browse all resources</a>
+    </div>
+  </div>`;
+}
+
+// ─── Init ──────────────────────────────────────────────────────────────────────
+
+function init() {
+  const p = new URLSearchParams(location.search);
+  if (p.get('access') === 'granted') {
+    grantAccess();
+    history.replaceState({}, '', location.pathname);
+  }
+
+  if (hasUsedAccess()) appState = 'used';
+  else if (!hasValidAccess()) appState = 'gate';
+  else appState = 'intro';
+
+  render();
+}
+
+init();
+</script>
+</body>
+</html>

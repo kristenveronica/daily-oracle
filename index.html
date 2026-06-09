@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Daily Oracle — Simple wisdoms for difficult people.</title>
+  <meta name="description" content="Quizzes, guides, and practical scripts for moments that suddenly stop making sense. Simple wisdoms for handling difficult people." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+
+    /* ─── Site header ────────────────────────────────────────────────── */
+
+    .site-header {
+      text-align: center;
+      padding: 10px 20px 20px;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .header-logo {
+      height: 165px;
+      width: auto;
+      display: inline-block;
+      margin-bottom: 0;
+    }
+
+    .site-header h1 {
+      font-size: clamp(1.35rem, 5vw, 2.1rem);
+      color: var(--purple-deep);
+      font-weight: 600;
+      line-height: 1.28;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .header-lead {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      max-width: 340px;
+      margin: 0 auto 18px;
+    }
+
+    /* ─── Store ──────────────────────────────────────────────────────── */
+
+    .store-section {
+      background: var(--bg-soft);
+      padding: 24px 16px 56px;
+    }
+
+    .store-row-label {
+      max-width: 960px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .store-row-label .section-label {
+      margin: 0;
+      white-space: nowrap;
+      color: var(--text-mid);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+    }
+
+    .store-row-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-strong);
+      opacity: 0.5;
+    }
+
+    .section-gap {
+      max-width: 960px;
+      margin: 36px auto 16px;
+    }
+
+    /* ─── Featured wrap ──────────────────────────────────────────────── */
+
+    .featured-wrap {
+      max-width: 960px;
+      margin: 0 auto 36px;
+    }
+
+    /* ─── Resources grid (ebook + 2 quizzes, 3-col on desktop) ──────── */
+
+    .resources-grid {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media (min-width: 580px) {
+      .resources-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
+    }
+
+    @media (min-width: 800px) {
+      .resources-grid { grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+    }
+
+    /* ─── Desktop overrides ──────────────────────────────────────────── */
+
+    @media (min-width: 640px) {
+      .site-header { padding: 16px 24px 36px; }
+      .header-logo { margin-bottom: 2px; }
+      .site-header h1 { margin-bottom: 14px; }
+      .header-lead { font-size: 0.96rem; max-width: 380px; margin-bottom: 26px; }
+      .store-section { padding: 40px 24px 80px; }
+      .section-gap { margin: 52px auto 20px; }
+      .featured-wrap { margin-bottom: 52px; }
+    }
+
+    /* ─── Product card ───────────────────────────────────────────────── */
+
+    .pcard {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .pcard:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 28px rgba(28, 24, 16, 0.1);
+    }
+
+    /* Suite / featured card */
+    .pcard--suite {
+      background: var(--purple-mid);
+      border: 1px solid rgba(196, 168, 120, 0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.22s ease;
+    }
+
+    .pcard--suite:hover {
+      box-shadow: 0 8px 40px rgba(28, 24, 16, 0.3);
+    }
+
+    /* Mobile: image flows naturally so the full photo is visible */
+    .pcard--suite .pcard-image img {
+      position: static;
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    @media (min-width: 680px) {
+      .pcard--suite { flex-direction: row; }
+      .pcard--suite .pcard-image {
+        width: 38%;
+        flex-shrink: 0;
+        aspect-ratio: auto;
+        min-height: 240px;
+        align-self: stretch;
+      }
+      /* Desktop: image fills the panel absolutely to match card height */
+      .pcard--suite .pcard-image img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+      }
+      .pcard--suite .pcard-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+    }
+
+    /* ─── Card image / CSS art ───────────────────────────────────────── */
+
+    .pcard-image {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--purple-mid);
+      min-height: 120px;
+    }
+
+    .pcard-art {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .art-quiz1 {
+      background: linear-gradient(150deg, #FAF7F0 0%, #EDE3CC 55%, #F5EDDA 100%);
+    }
+    .art-quiz1::after {
+      content: '';
+      position: absolute;
+      width: 48%; height: 70%;
+      border-radius: 50%;
+      top: 15%; left: 26%;
+      border: 1px solid rgba(196, 168, 120, 0.4);
+    }
+
+    .art-quiz2 {
+      background: linear-gradient(155deg, #EDF0E4 0%, #E2EAD6 45%, #F5F2E8 100%);
+    }
+    .art-quiz2::before {
+      content: '';
+      position: absolute;
+      left: 49.5%; top: 15%; bottom: 15%;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, rgba(122, 138, 94, 0.3), transparent);
+    }
+    .art-quiz2::after {
+      content: '';
+      position: absolute;
+      width: 30%; height: 45%;
+      border-radius: 50%;
+      top: 27.5%; left: 35%;
+      background: radial-gradient(circle, rgba(122, 138, 94, 0.18) 0%, transparent 70%);
+    }
+
+    .art-ebook1 {
+      background: linear-gradient(155deg, #1C1810 0%, #2A2218 65%, #3A2E1A 100%);
+    }
+    .art-ebook1::before {
+      content: '';
+      position: absolute;
+      width: 52%; height: 74%;
+      border-radius: 50%;
+      top: 13%; left: 24%;
+      border: 1px solid rgba(237, 227, 204, 0.22);
+    }
+    .art-ebook1::after {
+      content: '';
+      position: absolute;
+      width: 24%; height: 35%;
+      border-radius: 50%;
+      top: 32.5%; left: 38%;
+      background: radial-gradient(circle, rgba(237, 227, 204, 0.2) 0%, transparent 70%);
+    }
+
+    .art-suite {
+      background: radial-gradient(ellipse 75% 65% at 50% 52%, rgba(196, 168, 120, 0.22) 0%, #1C1810 62%);
+    }
+    .art-suite::before {
+      content: '';
+      position: absolute;
+      width: 54%; height: 76%;
+      border-radius: 50%;
+      top: 12%; left: 23%;
+      border: 1px solid rgba(237, 227, 204, 0.18);
+    }
+    .art-suite::after {
+      content: '';
+      position: absolute;
+      width: 26%; height: 37%;
+      border-radius: 50%;
+      top: 31.5%; left: 37%;
+      background: radial-gradient(circle, rgba(196, 168, 120, 0.28) 0%, transparent 70%);
+    }
+
+    /* ─── Card body ──────────────────────────────────────────────────── */
+
+    .pcard-body {
+      padding: 16px 18px 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    @media (min-width: 580px) {
+      .pcard-body { padding: 22px 22px 16px; gap: 8px; }
+    }
+
+    .pcard-type {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--mauve-dark);
+    }
+
+    .pcard--suite .pcard-type { color: var(--mauve); opacity: 0.8; }
+
+    .pcard-title {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--purple-deep);
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .pcard--suite .pcard-title { color: var(--mauve-light); }
+
+    .pcard-subtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.9rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .pcard--suite .pcard-subtitle { color: var(--mauve-light); opacity: 0.65; }
+
+    .pcard-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .pcard--suite .pcard-desc { color: var(--mauve-light); opacity: 0.7; }
+
+    .pcard-includes {
+      list-style: none;
+      margin: 4px 0 0;
+      padding: 10px 0 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .pcard--suite .pcard-includes { border-top-color: rgba(196, 168, 120, 0.18); }
+
+    .pcard-includes li {
+      font-size: 0.77rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .pcard-includes li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--mauve);
+    }
+
+    .pcard--suite .pcard-includes li { color: var(--mauve-light); opacity: 0.65; }
+
+    /* ─── Card footer ────────────────────────────────────────────────── */
+
+    .pcard-footer {
+      padding: 10px 18px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    @media (min-width: 580px) {
+      .pcard-footer { padding: 14px 22px 22px; }
+    }
+
+    .pcard-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--purple-deep);
+      line-height: 1;
+    }
+
+    .pcard--suite .pcard-price { color: var(--mauve-light); }
+
+    .pcard-save {
+      font-size: 0.64rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--mauve-dark);
+      margin-top: 3px;
+    }
+
+    .pcard--suite .pcard-save { color: var(--mauve); opacity: 0.7; }
+
+    .btn-pcard {
+      background: var(--purple-mid);
+      color: var(--text-light);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      padding: 11px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: background 0.18s;
+      white-space: nowrap;
+    }
+
+    .btn-pcard:hover { background: var(--purple-accent); }
+
+    .pcard--suite .btn-pcard {
+      background: var(--mauve);
+      color: var(--bg-dark);
+    }
+    .pcard--suite .btn-pcard:hover {
+      background: var(--mauve-light);
+      color: var(--bg-dark);
+    }
+
+    /* ─── Scroll reveal (mobile only) ───────────────────────────────── */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.9s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── Upsell modal ───────────────────────────────────────────────── */
+
+    .upsell-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(36, 28, 24, 0.6);
+      z-index: 900;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .upsell-box {
+      background: var(--bg-white);
+      border-radius: 16px;
+      max-width: 420px;
+      width: 100%;
+      padding: 36px 32px 32px;
+      position: relative;
+      animation: upsellIn 0.22s ease both;
+    }
+
+    @keyframes upsellIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .upsell-close {
+      position: absolute;
+      top: 14px; right: 16px;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px 8px;
+    }
+
+    .upsell-close:hover { color: var(--text); }
+
+    .upsell-eyebrow {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mauve-dark);
+      margin-bottom: 12px;
+    }
+
+    .upsell-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--purple-deep);
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .upsell-body {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .upsell-cta-primary {
+      background: var(--purple-mid);
+      color: var(--text-light);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      width: 100%;
+      margin-bottom: 12px;
+      transition: background 0.18s;
+    }
+
+    .upsell-cta-primary:hover { background: var(--purple-accent); }
+
+    .upsell-cta-secondary {
+      display: block;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+    }
+
+    .upsell-cta-secondary:hover { color: var(--text); }
+
+  </style>
+</head>
+<body>
+
+  <!-- Header / Hero -->
+  <header class="site-header">
+    <img src="assets/web images/Daily Oracle Web Logo Transparent 2.png" alt="The Daily Oracle" class="header-logo">
+    <h1>Simple Wisdoms For Relationships With<br>Difficult People.</h1>
+    <p class="header-lead">Quizzes and guides designed to help you understand what you're experiencing and feel more grounded in your own reality.</p>
+  </header>
+
+  <!-- Store -->
+  <div class="store-section">
+
+    <!-- Featured: Complete Collection -->
+    <div class="featured-wrap" id="collection-grid"></div>
+
+    <!-- Resources: Field Guide + both quizzes -->
+    <div class="section-gap" id="resources">
+      <div class="store-row-label">
+        <p class="section-label">Guides &amp; Quizzes</p>
+      </div>
+    </div>
+    <div class="resources-grid" id="resources-grid"></div>
+
+  </div>
+
+  <!-- Upsell modal -->
+  <div class="upsell-overlay" id="upsell-overlay" style="display:none" onclick="if(event.target===this)closeUpsell()">
+    <div class="upsell-box">
+      <button class="upsell-close" onclick="closeUpsell()">×</button>
+      <div id="upsell-content"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 The Daily Oracle. All rights reserved.</p>
+    <p style="margin-top:6px;font-size:0.72rem;color:var(--text-muted)">
+      Questions? <a href="mailto:hello@thedailyoracle.org" style="color:var(--mauve-dark);text-decoration:underline;text-underline-offset:2px">Get in touch</a>
+    </p>
+    <div class="footer-links" style="margin-top:16px">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+      <a href="support.html">Support</a>
+      <a href="account-deletion.html">Account Deletion</a>
+    </div>
+  </footer>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════════
+    //  STRIPE PAYMENT LINKS
+    // ═══════════════════════════════════════════════════════════════════
+    const STRIPE = {
+      quiz1:      'https://buy.stripe.com/cNifZic9j3sSfHu7r3dfG05',
+      quiz2:      'https://buy.stripe.com/cNi00k0qB7J866U5iVdfG06',
+      quizBundle: 'https://buy.stripe.com/00wfZi6OZaVk2UIaDfdfG07',
+      ebook1:     'https://buy.stripe.com/dRmaEYehre7wbrefXzdfG0a',
+      suite:      'https://buy.stripe.com/8x2cN6b5f4wWana8v7dfG0d',
+    };
+
+    // ─── Product data ──────────────────────────────────────────────────
+
+    const COLLECTION = {
+      key:      'suite',
+      type:     'Complete Collection',
+      title:    'The Daily Oracle Collection',
+      desc:     'A complete collection designed to help you regain clarity, strengthen self-trust, and navigate difficult dynamics more confidently.',
+      art:      'art-suite',
+      img:      'assets/web images/Daily Oracle Collection Cover 2.png',
+      price:    '$25',
+      save:     'Save $6',
+      includes: ['Both quizzes', 'A Field Guide to Reality Distortion'],
+      featured: true,
+      cta:      'Get the Collection',
+    };
+
+    const RESOURCES = [
+      {
+        key:      'ebook1',
+        type:     'Guide',
+        title:    'A Field Guide to Reality Distortion',
+        subtitle: 'When Something Feels Off and You Can\'t Name It',
+        desc:     'A clear guide to the conversations, distortions, and loops that disrupt self-trust, so you can regain clarity and feel more grounded in your own perception.',
+        art:      'art-ebook1',
+        img:      'assets/web images/Reality Distortion Ebook Cover.png',
+        price:    '$17',
+        cta:      'Get the Guide',
+      },
+      {
+        key:   'quiz1',
+        type:  'Quiz',
+        title: 'Am I Imagining This, or Is Something Actually Wrong?',
+        desc:  'A clarity quiz to help you understand what you\'re experiencing and trust your perception again.',
+        art:   'art-quiz1',
+        img:   'assets/web images/Quiz 1 Cover.png',
+        price: '$7',
+        cta:   'Take the Quiz',
+        upsell: true,
+      },
+      {
+        key:   'quiz2',
+        type:  'Quiz',
+        title: 'Is It Actually Me, or Have I Been Gaslit?',
+        desc:  'A reflective quiz to help you separate self-awareness from self-blame and regain confidence in your own reality.',
+        art:   'art-quiz2',
+        img:   'assets/web images/Quiz 2 Cover.png',
+        price: '$7',
+        cta:   'Take the Quiz',
+        upsell: true,
+      },
+    ];
+
+    // ─── Upsell modal ──────────────────────────────────────────────────
+
+    function showUpsell(key) {
+      const other = key === 'quiz1' ? 'quiz2' : 'quiz1';
+      document.getElementById('upsell-content').innerHTML = `
+        <p class="upsell-eyebrow">Before you go</p>
+        <h3 class="upsell-title">Add the second quiz for $5 more?</h3>
+        <p class="upsell-body">The two quizzes approach the same dynamic from opposite angles — one looks at what's happening in the relationship, the other turns the lens on you. Together, they give a fuller, more grounded picture. Both for $12, saving you $2.</p>
+        <a href="${STRIPE.quizBundle}" class="upsell-cta-primary">Get Both Quizzes — $12 →</a>
+        <a href="${STRIPE[key]}" class="upsell-cta-secondary">Continue with this quiz only — $7</a>
+      `;
+      document.getElementById('upsell-overlay').style.display = 'flex';
+    }
+
+    function closeUpsell() {
+      document.getElementById('upsell-overlay').style.display = 'none';
+    }
+
+    // ─── Card renderer ─────────────────────────────────────────────────
+
+    function buildCard(p) {
+      const cls = p.featured ? 'pcard--suite' : 'pcard';
+
+      const includes = p.includes
+        ? `<ul class="pcard-includes">${p.includes.map(i => `<li>${i}</li>`).join('')}</ul>`
+        : '';
+      const save     = p.save ? `<div class="pcard-save">${p.save}</div>` : '';
+      const subtitle = p.subtitle ? `<p class="pcard-subtitle">${p.subtitle}</p>` : '';
+      const imageEl  = p.img
+        ? p.featured
+          ? `<img src="${p.img}" alt="${p.title}">`
+          : `<img src="${p.img}" alt="${p.title}" style="width:100%;height:auto;display:block;">`
+        : `<div class="pcard-art ${p.art}"></div>`;
+
+      const ctaEl = p.upsell
+        ? `<a href="#" onclick="showUpsell('${p.key}');return false;" class="btn-pcard">${p.cta} →</a>`
+        : `<a href="${STRIPE[p.key]}" class="btn-pcard">${p.cta} →</a>`;
+
+      if (p.featured) {
+        return `
+          <div class="${cls}">
+            <div class="pcard-image">${imageEl}</div>
+            <div class="pcard-content">
+              <div class="pcard-body">
+                <span class="pcard-type">${p.type}</span>
+                <h3 class="pcard-title">${p.title}</h3>
+                ${subtitle}
+                <p class="pcard-desc">${p.desc}</p>
+                ${includes}
+              </div>
+              <div class="pcard-footer">
+                <div>
+                  <div class="pcard-price">${p.price}</div>
+                  ${save}
+                </div>
+                ${ctaEl}
+              </div>
+            </div>
+          </div>`;
+      }
+
+      return `
+        <div class="${cls}">
+          <div class="pcard-image">${imageEl}</div>
+          <div class="pcard-body">
+            <span class="pcard-type">${p.type}</span>
+            <h3 class="pcard-title">${p.title}</h3>
+            ${subtitle}
+            <p class="pcard-desc">${p.desc}</p>
+            ${includes}
+          </div>
+          <div class="pcard-footer">
+            <div>
+              <div class="pcard-price">${p.price}</div>
+              ${save}
+            </div>
+            ${ctaEl}
+          </div>
+        </div>`;
+    }
+
+    document.getElementById('collection-grid').innerHTML  = buildCard(COLLECTION);
+    document.getElementById('resources-grid').innerHTML   = RESOURCES.map(p => buildCard(p)).join('');
+
+    // ─── Scroll reveal ─────────────────────────────────────────────────
+    const cards = document.querySelectorAll('.pcard, .pcard--suite');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+
+    cards.forEach((card, i) => {
+      card.classList.add('reveal');
+      card.style.transitionDelay = `${i * 120}ms`;
+      observer.observe(card);
+    });
+  </script>
+
+</body>
+</html>

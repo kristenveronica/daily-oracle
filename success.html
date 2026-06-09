@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You — The Pattern. Unpacked.</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .access-block {
+      margin-top: 40px;
+      padding-top: 36px;
+      border-top: 1px solid var(--border);
+    }
+
+    .access-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .access-item:last-child { border-bottom: none; }
+
+    .access-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--mauve);
+      flex-shrink: 0;
+      margin-top: 8px;
+    }
+
+    .access-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--purple-deep);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .access-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+
+    .quiz-choice {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .btn-quiz-choice {
+      background: var(--bg-soft);
+      border: 1.5px solid var(--border-strong);
+      color: var(--purple-mid);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 12px 20px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .btn-quiz-choice:hover {
+      background: var(--mauve-pale);
+      border-color: var(--mauve);
+    }
+  </style>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════════
+    //  PDF DOWNLOAD LINKS
+    //  Upload your PDF files to your web host, then replace each
+    //  placeholder below with the file's public URL.
+    //  e.g. 'https://[your-domain]/files/the-gaslighting-loop.pdf'
+    // ═══════════════════════════════════════════════════════════════════
+    const DOWNLOADS = {
+      ebook1: 'REPLACE_ME_EBOOK1_PDF_URL',
+      ebook2: 'REPLACE_ME_EBOOK2_PDF_URL',
+    };
+
+  </script>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html"><img src="assets/web images/Daily Oracle Web Logo Transparent 2.png" alt="The Daily Oracle" class="nav-logo"></a>
+  </nav>
+
+  <div class="container--narrow" style="padding-top:56px;padding-bottom:80px">
+
+    <!-- Confirmation -->
+    <div id="confirmation">
+      <p class="section-label" style="margin-bottom:20px">Purchase confirmed</p>
+      <h1 id="confirm-heading" style="font-size:clamp(1.6rem,6vw,2.4rem);color:var(--purple-deep);margin-bottom:16px">You're in.</h1>
+      <p id="confirm-body" style="color:var(--text-muted)"></p>
+    </div>
+
+    <!-- Access block: rendered by JS -->
+    <div id="access-block" class="access-block"></div>
+
+
+    <!-- Return link -->
+    <div style="margin-top:48px">
+      <a href="index.html" style="font-size:0.78rem;color:var(--text-muted);text-decoration:underline;text-underline-offset:3px">← Browse all resources</a>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>© 2026 The Daily Oracle. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="index.html">Store</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+      <a href="support.html">Support</a>
+      <a href="account-deletion.html">Account Deletion</a>
+    </div>
+  </footer>
+
+  <script>
+    // ─── Utilities ─────────────────────────────────────────────────────
+    function param(k) { return new URLSearchParams(window.location.search).get(k); }
+
+    function downloadBtn(key, label) {
+      const url = DOWNLOADS[key];
+      const isPlaceholder = url.includes('REPLACE_ME');
+      if (isPlaceholder) {
+        return `<a href="#" onclick="alert('PDF link not yet configured.');return false;" class="btn btn-outline" style="font-size:0.8rem">${label} (coming soon)</a>`;
+      }
+      return `<a href="${url}" download class="btn btn-primary" style="font-size:0.8rem">${label} →</a>`;
+    }
+
+    // ─── Page init ─────────────────────────────────────────────────────
+    function init() {
+      const product = param('product') || '';
+
+      const headings = {
+        quiz1:       ['Your quiz is ready.',         'Take the quiz below.'],
+        quiz2:       ['Your quiz is ready.',         'Take the quiz below.'],
+        quizBundle:  ['Both quizzes are ready.',     'Choose which quiz to take first.'],
+        ebook1:      ['Your e-book is ready.',       'Download your PDF below. Bookmark this page for future access.'],
+        ebook2:      ['Your e-book is ready.',       'Download your PDF below. Bookmark this page for future access.'],
+        ebookBundle: ['Both e-books are ready.',     'Download your PDFs below. Bookmark this page for future access.'],
+        suite:       ['You have the complete suite.','Your quizzes and e-books are all below. Bookmark this page.'],
+      };
+
+      const [heading, body] = headings[product] || ['Purchase confirmed.', 'Thank you for your purchase.'];
+      document.getElementById('confirm-heading').textContent = heading;
+      document.getElementById('confirm-body').textContent   = body;
+
+      buildAccessBlock(product);
+    }
+
+    // ─── Access block ──────────────────────────────────────────────────
+    function buildAccessBlock(product) {
+      const block = document.getElementById('access-block');
+
+      if (product === 'quiz1') {
+        grantQuizAccess('quiz1');
+        block.innerHTML = quizAccessBlock(
+          'Your quiz',
+          [{ label: 'Am I Imagining This, or Is Something Actually Wrong?', url: 'take-quiz-1.html', btnText: 'Begin Quiz 1 →' }]
+        );
+
+      } else if (product === 'quiz2') {
+        grantQuizAccess('quiz2');
+        block.innerHTML = quizAccessBlock(
+          'Your quiz',
+          [{ label: 'Is It Actually Me, or Have I Been Gaslit?', url: 'take-quiz-2.html', btnText: 'Begin Quiz 2 →' }]
+        );
+
+      } else if (product === 'quizBundle') {
+        grantQuizAccess('quiz1');
+        grantQuizAccess('quiz2');
+        block.innerHTML = quizAccessBlock(
+          'Your quizzes',
+          [
+            { label: 'Am I Imagining This, or Is Something Actually Wrong?', url: 'take-quiz-1.html', btnText: 'Begin Quiz 1 →' },
+            { label: 'Is It Actually Me, or Have I Been Gaslit?', url: 'take-quiz-2.html', btnText: 'Begin Quiz 2 →' },
+          ]
+        );
+
+      } else if (product === 'ebook1') {
+        block.innerHTML = `
+          <p class="section-label" style="margin-bottom:16px">Your download</p>
+          <div class="access-item">
+            <div class="access-dot"></div>
+            <div>
+              <div class="access-label">A Field Guide to Reality Distortion</div>
+              <p class="access-note">E-book — PDF</p>
+              ${downloadBtn('ebook1', 'Download PDF')}
+            </div>
+          </div>`;
+
+      } else if (product === 'ebook2') {
+        block.innerHTML = `
+          <p class="section-label" style="margin-bottom:16px">Your download</p>
+          <div class="access-item">
+            <div class="access-dot"></div>
+            <div>
+              <div class="access-label">Hold The Line: Scripts</div>
+              <p class="access-note">E-book — PDF</p>
+              ${downloadBtn('ebook2', 'Download PDF')}
+            </div>
+          </div>`;
+
+      } else if (product === 'ebookBundle') {
+        block.innerHTML = `
+          <p class="section-label" style="margin-bottom:16px">Your downloads</p>
+          <div class="access-item">
+            <div class="access-dot"></div>
+            <div>
+              <div class="access-label">A Field Guide to Reality Distortion</div>
+              <p class="access-note">E-book — PDF</p>
+              ${downloadBtn('ebook1', 'Download PDF')}
+            </div>
+          </div>
+          <div class="access-item">
+            <div class="access-dot"></div>
+            <div>
+              <div class="access-label">Hold The Line: Scripts</div>
+              <p class="access-note">E-book — PDF</p>
+              ${downloadBtn('ebook2', 'Download PDF')}
+            </div>
+          </div>`;
+
+      } else if (product === 'suite') {
+        grantQuizAccess('quiz1');
+        grantQuizAccess('quiz2');
+        block.innerHTML = `
+          <p class="section-label" style="margin-bottom:16px">Your complete suite</p>
+          <div class="access-item">
+            <div class="access-dot"></div>
+            <div>
+              <div class="access-label">A Field Guide to Reality Distortion</div>
+              <p class="access-note">E-book — PDF</p>
+              ${downloadBtn('ebook1', 'Download PDF')}
+            </div>
+          </div>
+          <div class="access-item">
+            <div class="access-dot"></div>
+            <div>
+              <div class="access-label">Hold The Line: Scripts</div>
+              <p class="access-note">E-book — PDF</p>
+              ${downloadBtn('ebook2', 'Download PDF')}
+            </div>
+          </div>
+          ${quizAccessBlock('Your quizzes', [
+            { label: 'Am I Imagining This, or Is Something Actually Wrong?', url: 'take-quiz-1.html', btnText: 'Begin Quiz 1 →' },
+            { label: 'Is It Actually Me, or Have I Been Gaslit?', url: 'take-quiz-2.html', btnText: 'Begin Quiz 2 →' },
+          ])}`;
+      }
+    }
+
+    // ─── Quiz access helpers ───────────────────────────────────────────
+
+    function grantQuizAccess(quizKey) {
+      const storageKey = quizKey === 'quiz1' ? 'dq_quiz1_access' : 'dq_quiz2_access';
+      try {
+        localStorage.setItem(storageKey, JSON.stringify({ granted: true, used: false, ts: Date.now() }));
+      } catch {}
+    }
+
+    function quizAccessBlock(heading, quizzes) {
+      const items = quizzes.map(q => `
+        <div class="access-item">
+          <div class="access-dot"></div>
+          <div>
+            <div class="access-label">${q.label}</div>
+            <p class="access-note">Interactive quiz — begins immediately</p>
+            <a href="${q.url}" class="btn btn-primary" style="font-size:0.8rem;display:inline-flex">${q.btnText}</a>
+            <p style="font-size:0.72rem;color:var(--text-muted);margin-top:8px">Bookmark this page to return anytime.</p>
+          </div>
+        </div>`).join('');
+      return `<p class="section-label" style="margin-bottom:16px;margin-top:32px">${heading}</p>${items}`;
+    }
+
+    init();
+  </script>
+
+</body>
+</html>

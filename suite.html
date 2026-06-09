@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Complete Suite — The Pattern. Unpacked.</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    // ── STRIPE ──────────────────────────────────────────
+    // Full Suite ($39) — both quizzes + ebook + scripts + full book
+    // Set success URL to: yoursite.com/v2/success.html?product=suite
+    const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/YOUR_SUITE_LINK';
+
+    // Ebook + Scripts bundle ($19)
+    // Set success URL to: yoursite.com/v2/success.html?product=bundle
+    const STRIPE_BUNDLE_LINK = 'https://buy.stripe.com/YOUR_BUNDLE_LINK';
+  </script>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">The Pattern<span class="dot">.</span> Unpacked<span class="dot">.</span></a>
+    <a href="index.html" class="nav-link">← Home</a>
+  </nav>
+
+  <!-- Hero -->
+  <div class="product-hero">
+    <p class="product-eyebrow">The Complete Suite</p>
+    <h1>Everything you need.<br>All at once.</h1>
+    <p class="lead">Both quizzes, the ebook, the scripts guide, and the full book — bundled together for people who are ready for deep work.</p>
+    <div class="divider"></div>
+    <p>Some people don't need to be walked through the funnel. They already know something is wrong. They want all the tools, immediately.</p>
+    <p style="margin-top:10px">This is for them.</p>
+  </div>
+
+  <!--
+    IMAGE ZONE
+    Suggested: an open, minimal desk or workspace — space for thinking.
+    Replace .image-zone-art with an <img> tag.
+    Dimensions: 1200×400px.
+  -->
+  <div class="image-zone image-zone--landscape" style="max-height:260px">
+    <div class="image-zone-art light-emergence"></div>
+  </div>
+
+  <!-- What's included -->
+  <div style="background:var(--bg-soft);padding:56px 24px">
+    <div class="container--narrow">
+      <p class="section-label" style="margin-bottom:24px">What's included</p>
+
+      <div id="suite-items"></div>
+
+      <div style="padding:24px 0;border-top:2px solid var(--border-strong);margin-top:8px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+          <span style="font-size:0.7rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted)">Total value</span>
+          <span style="font-size:0.95rem;color:var(--text-muted);text-decoration:line-through">$46</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <span style="font-size:0.7rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple-mid)">Suite price</span>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--purple-deep)">$39</span>
+        </div>
+        <p style="text-align:right;font-size:0.75rem;color:var(--mauve-dark);margin-top:4px">You save $7</p>
+      </div>
+
+      <a href="#" onclick="handlePurchase(event)" class="btn btn-primary btn-full" style="display:flex;margin-top:8px">
+        Get the Complete Suite — $39
+      </a>
+      <p style="font-size:0.72rem;color:var(--text-muted);text-align:center;margin-top:10px">Instant digital access. Secure checkout via Stripe.<br>Scripts &amp; One-Liners access granted on release.</p>
+    </div>
+  </div>
+
+  <!-- Individual options -->
+  <div class="panel-dark" style="padding:56px 24px">
+    <div class="container--narrow">
+      <h2 style="font-size:clamp(1.2rem,4vw,1.6rem);margin-bottom:12px">Or start with one thing.</h2>
+      <p style="margin-bottom:28px">Each resource is available individually if you'd prefer to begin with a single step.</p>
+
+      <div id="individual-list"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 The Pattern. Unpacked. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="quiz-1.html">Quiz</a>
+      <a href="ebook.html">Ebook</a>
+      <a href="book.html">Full Book</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+      <a href="support.html">Support</a>
+      <a href="account-deletion.html">Account Deletion</a>
+    </div>
+  </footer>
+
+  <script>
+    const products = [
+      { eyebrow: 'Quiz 01',             name: 'Is This Narcissistic Abuse?',       desc: '23 questions across five sections. Four possible results. No diagnosis — just clarity.',                           price: '$9',  link: 'quiz-1.html', available: true  },
+      { eyebrow: 'Quiz 02',             name: 'Am I the Narcissist?',              desc: '18 questions. Distinguishes genuine harmful patterns from being gaslit into self-doubt.',                          price: '$9',  link: 'quiz-2.html', available: true  },
+      { eyebrow: 'Ebook',               name: 'The Pattern. Unpacked.',            desc: 'Eight mechanisms of narcissistic abuse — named precisely so orientation replaces confusion.',                      price: '$13', link: 'ebook.html',   available: true  },
+      { eyebrow: 'Coming Soon',         name: 'Scripts & One-Liners',              desc: 'Precise language for boundaries, de-escalation, and protecting your reality in real time.',                        price: '$11', link: 'scripts.html', available: false, notifyMe: true },
+      { eyebrow: 'Bundle — Save $5',    name: 'Ebook + Scripts & One-Liners',      desc: 'Understanding and action together. $24 of value for $19.',                                                         price: '$19', link: null,           available: true,  bundle: true   },
+      { eyebrow: 'Full Book',           name: 'Un-Gaslight Yourself',              desc: 'The complete four-pillar framework for understanding narcissistic abuse — and finding your way back to yourself.',  price: '$24', link: 'book.html',    available: true  },
+    ];
+
+    // Suite includes list (all 6 products)
+    document.getElementById('suite-items').innerHTML = products.map(p =>
+      `<div class="suite-item">
+        <div>
+          <p style="font-size:0.62rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mauve);margin-bottom:4px">${p.eyebrow}</p>
+          <p class="suite-item-name">${p.name}${!p.available ? ' <span class="badge">Coming Soon</span>' : ''}</p>
+          <p class="suite-item-desc">${p.desc}</p>
+        </div>
+        <p class="suite-item-price">${p.price}</p>
+      </div>`
+    ).join('');
+
+    // Individual list (dark panel) — excludes bundle row (has its own CTA)
+    document.getElementById('individual-list').innerHTML = products.map(p => {
+      if (p.bundle) {
+        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid rgba(196,168,204,0.12)">
+            <div>
+              <span style="font-size:0.6rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mauve);display:block;margin-bottom:2px">${p.eyebrow}</span>
+              <span style="font-family:'Cormorant Garamond',serif;color:var(--text-light);font-size:1rem">${p.name}</span>
+            </div>
+            <a href="#" onclick="handleBundlePurchase(event)" style="font-size:0.8rem;color:var(--mauve-light)">${p.price} →</a>
+          </div>`;
+      }
+      return p.available
+        ? `<a href="${p.link}" style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid rgba(196,168,204,0.12);transition:opacity 0.2s" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">
+            <div>
+              <span style="font-size:0.6rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mauve);display:block;margin-bottom:2px">${p.eyebrow}</span>
+              <span style="font-family:'Cormorant Garamond',serif;color:var(--text-light);font-size:1rem">${p.name}</span>
+            </div>
+            <span style="font-size:0.8rem;color:var(--mauve-light)">${p.price} →</span>
+          </a>`
+        : `<div style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid rgba(196,168,204,0.12);opacity:0.45">
+            <div>
+              <span style="font-size:0.6rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mauve);display:block;margin-bottom:2px">${p.eyebrow}</span>
+              <span style="font-family:'Cormorant Garamond',serif;color:var(--text-light);font-size:1rem">${p.name} <span class="badge">Notify Me</span></span>
+            </div>
+            <span style="font-size:0.8rem;color:var(--mauve-light)">${p.price}</span>
+          </div>`;
+    }).join('');
+
+    function handlePurchase(e) {
+      e.preventDefault();
+      if (STRIPE_PAYMENT_LINK && !STRIPE_PAYMENT_LINK.includes('YOUR_')) {
+        window.location.href = STRIPE_PAYMENT_LINK;
+      } else {
+        alert('Payment link not yet configured. Replace STRIPE_PAYMENT_LINK in the page source.');
+      }
+    }
+
+    function handleBundlePurchase(e) {
+      e.preventDefault();
+      if (STRIPE_BUNDLE_LINK && !STRIPE_BUNDLE_LINK.includes('YOUR_')) {
+        window.location.href = STRIPE_BUNDLE_LINK;
+      } else {
+        alert('Bundle payment link not yet configured. Replace STRIPE_BUNDLE_LINK in the page source.');
+      }
+    }
+  </script>
+
+</body>
+</html>

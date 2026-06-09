@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Pattern. Unpacked. — Ebook</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    // ── STRIPE ──────────────────────────────────────────
+    // Replace with your Stripe Payment Link for the ebook.
+    // Set success URL to: yoursite.com/v2/success.html?product=ebook
+    const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/YOUR_EBOOK_LINK';
+  </script>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">The Pattern<span class="dot">.</span> Unpacked<span class="dot">.</span></a>
+    <a href="suite.html" class="nav-link">Full Suite</a>
+  </nav>
+
+  <!-- Hero -->
+  <div class="product-hero">
+    <p class="product-eyebrow">Ebook</p>
+    <h1>The Pattern. Unpacked.</h1>
+    <p class="lead">Eight mechanisms of narcissistic abuse — named precisely so orientation replaces confusion.</p>
+    <div class="divider"></div>
+    <p style="margin-bottom:12px">If you've ever left a conversation more confused than when you started, this is for you.</p>
+    <p>This ebook names the mechanisms behind narcissistic abuse — not as a list of red flags, but as a structural pattern you can learn to recognise.</p>
+    <div class="price-block">
+      <span class="price">$13</span>
+      <span class="price-note">Instant digital download</span>
+    </div>
+    <a href="#" onclick="handlePurchase(event)" class="btn btn-primary">Buy Now</a>
+    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:10px">Secure checkout via Stripe.</p>
+  </div>
+
+  <!--
+    IMAGE ZONE — Product visual or abstract
+    Suggested: a single sheet of paper with light on it, hands holding
+    an open book, or soft light through a window.
+    Replace the .image-zone-art div with an <img> tag.
+    Dimensions: 1200×500px landscape.
+  -->
+  <div class="image-zone image-zone--landscape" style="max-height:320px">
+    <div class="image-zone-art light-emergence"></div>
+  </div>
+
+  <!-- What's inside -->
+  <div class="includes-section">
+    <div class="container--narrow">
+      <p class="section-label">What's inside</p>
+
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">Why the same conversation keeps happening — the structure of the loop explained</p>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">How gaslighting works as a mechanism, not a single event</p>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">Why clarity disappears after conversations — and where it goes</p>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">The role of intermittent reinforcement in creating powerful, painful attachment</p>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">Why leaving or setting limits often feels impossible — even when you know you should</p>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">What happens when the pattern becomes visible</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Who this is for + quote -->
+  <div class="panel-light">
+    <div class="container--narrow">
+      <h2 style="color:var(--purple-deep);margin-bottom:20px">Who this is for</h2>
+      <p style="margin-bottom:12px">You don't need to have the language yet. You don't need to be certain about what's happening.</p>
+      <p style="margin-bottom:12px">This ebook is for anyone who suspects the confusion they feel is not random — that there's a pattern underneath it.</p>
+      <p style="margin-bottom:32px">It's written without labels, without sensationalism, and without telling you what to do. It gives you the structure. You decide what to do with it.</p>
+
+      <div style="padding:28px;border-left:3px solid var(--mauve);background:var(--bg-soft)">
+        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--purple-deep);font-weight:300;line-height:1.5;margin:0">"When you understand the mechanism, the confusion begins to lift."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA repeat -->
+  <div style="background:var(--bg-soft);padding:56px 24px;text-align:center">
+    <div class="container--narrow" style="max-width:460px">
+      <h2 style="color:var(--purple-deep);margin-bottom:12px">When the pattern becomes visible,<br>the confusion stops being personal.</h2>
+      <p style="margin-bottom:28px">And from there, you can decide what comes next.</p>
+      <a href="#" onclick="handlePurchase(event)" class="btn btn-primary" style="display:inline-flex;margin-bottom:10px">Buy Now — $13</a>
+      <div>
+        <a href="suite.html" style="font-size:0.78rem;color:var(--text-muted);text-decoration:underline;text-underline-offset:3px">Or get it as part of the Complete Suite</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Also available -->
+  <div class="panel-light" style="padding-top:48px;padding-bottom:64px">
+    <div class="container--narrow">
+      <p class="section-label" style="margin-bottom:20px">Also available</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <a href="quiz-1.html" style="display:block;padding:20px;border:1px solid var(--border);border-radius:2px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--purple-mid)';this.style.background='var(--bg-soft)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+          <p style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mauve-dark);margin-bottom:6px">Quiz 1 — $9</p>
+          <p style="color:var(--purple-deep);font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:4px">Is This Narcissistic Abuse?</p>
+          <p style="font-size:0.8rem;color:var(--text-muted)">23 questions across five sections →</p>
+        </a>
+        <a href="book.html" style="display:block;padding:20px;border:1px solid var(--border);border-radius:2px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--purple-mid)';this.style.background='var(--bg-soft)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+          <p style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mauve-dark);margin-bottom:6px">Full Book — $24</p>
+          <p style="color:var(--purple-deep);font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:4px">Un-Gaslight Yourself</p>
+          <p style="font-size:0.8rem;color:var(--text-muted)">The complete four-pillar framework →</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 The Pattern. Unpacked. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="quiz-1.html">Quiz</a>
+      <a href="book.html">Full Book</a>
+      <a href="suite.html">Suite</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+      <a href="support.html">Support</a>
+      <a href="account-deletion.html">Account Deletion</a>
+    </div>
+  </footer>
+
+  <script>
+    function handlePurchase(e) {
+      e.preventDefault();
+      if (STRIPE_PAYMENT_LINK && !STRIPE_PAYMENT_LINK.includes('YOUR_')) {
+        window.location.href = STRIPE_PAYMENT_LINK;
+      } else {
+        alert('Payment link not yet configured. Replace STRIPE_PAYMENT_LINK in the page source with your Stripe Payment Link URL.');
+      }
+    }
+  </script>
+
+</body>
+</html>

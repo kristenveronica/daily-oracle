@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Un-Gaslight Yourself — The Pattern. Unpacked.</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    // ── STRIPE ──────────────────────────────────────────
+    // Replace with your Stripe Payment Link for the full book.
+    // Set success URL to: yoursite.com/v2/success.html?product=book
+    const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/YOUR_FULL_BOOK_LINK';
+  </script>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">The Pattern<span class="dot">.</span> Unpacked<span class="dot">.</span></a>
+    <a href="suite.html" class="nav-link">Full Suite</a>
+  </nav>
+
+  <!-- Hero -->
+  <div class="product-hero">
+    <p class="product-eyebrow">The Full Book</p>
+    <h1 style="font-style:italic">Un-Gaslight Yourself</h1>
+    <p class="lead">The complete four-pillar framework for understanding narcissistic abuse — and finding your way back to yourself.</p>
+    <div class="divider"></div>
+    <p style="margin-bottom:12px">This is not a book about warning signs, red flags, or how to leave.</p>
+    <p style="margin-bottom:12px">It is a book about the mechanism. About why confusion is the first symptom, and what feeds it. About what happens when you understand the structure of the dynamic you're in.</p>
+    <p>When the pattern becomes visible, something changes. You stop negotiating your own reality. And from there, you can decide what comes next.</p>
+    <div class="price-block">
+      <span class="price">$24</span>
+      <span class="price-note">Instant digital download</span>
+    </div>
+    <a href="#" onclick="handlePurchase(event)" class="btn btn-primary">Buy Now</a>
+    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:10px">Secure checkout via Stripe.</p>
+  </div>
+
+  <!--
+    IMAGE ZONE
+    Suggested: an open book with soft light falling on it, or
+    an abstract image of clarity — light through fog, open water.
+    Replace .image-zone-art with an <img> tag.
+    Dimensions: 1200×480px.
+  -->
+  <div class="image-zone image-zone--landscape" style="max-height:300px">
+    <div class="image-zone-art horizon-art"></div>
+  </div>
+
+  <!-- Eight mechanisms — dark panel -->
+  <div class="panel-dark">
+    <div class="container--narrow">
+      <p class="section-label" style="color:var(--mauve)">The eight mechanisms</p>
+      <p style="margin-bottom:28px">The book is structured around eight mechanisms that together form the complete pattern of narcissistic abuse.</p>
+      <div id="mechanisms-list"></div>
+    </div>
+  </div>
+
+  <!-- Who for + quote -->
+  <div class="panel-quote">
+    <blockquote>"Once the pattern is visible, the confusion stops being personal."</blockquote>
+    <cite>— The Pattern. Unpacked.</cite>
+  </div>
+
+  <div class="panel-light">
+    <div class="container--narrow">
+      <h2 style="color:var(--purple-deep);margin-bottom:20px">Who this is for</h2>
+      <p style="margin-bottom:12px">This book is for anyone trying to understand a relationship that keeps them confused.</p>
+      <p style="margin-bottom:12px">It's written for people who have already tried therapy, journaling, and talking to friends — and still feel like they're missing something.</p>
+      <p>What they're missing is usually the structure. This book gives them that.</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div style="background:var(--bg-soft);padding:56px 24px">
+    <div class="container--narrow" style="max-width:460px;text-align:center;margin:0 auto">
+      <a href="#" onclick="handlePurchase(event)" class="btn btn-primary" style="display:inline-flex;margin-bottom:10px">Buy Now — $24</a>
+      <div>
+        <a href="suite.html" style="font-size:0.78rem;color:var(--text-muted);text-decoration:underline;text-underline-offset:3px">Or save with the Complete Suite</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Start smaller -->
+  <div class="panel-light" style="padding-top:48px;padding-bottom:64px">
+    <div class="container--narrow">
+      <p class="section-label" style="margin-bottom:20px">Start smaller</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <a href="ebook.html" style="display:block;padding:20px;border:1px solid var(--border);border-radius:2px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--purple-mid)';this.style.background='var(--bg-soft)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+          <p style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mauve-dark);margin-bottom:6px">Ebook — $13</p>
+          <p style="color:var(--purple-deep);font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:4px">The Pattern. Unpacked.</p>
+          <p style="font-size:0.8rem;color:var(--text-muted)">Eight mechanisms of narcissistic abuse →</p>
+        </a>
+        <a href="quiz-1.html" style="display:block;padding:20px;border:1px solid var(--border);border-radius:2px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--purple-mid)';this.style.background='var(--bg-soft)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+          <p style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mauve-dark);margin-bottom:6px">Quiz 1 — $9</p>
+          <p style="color:var(--purple-deep);font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:4px">Is This Narcissistic Abuse?</p>
+          <p style="font-size:0.8rem;color:var(--text-muted)">23 questions across five sections →</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 The Pattern. Unpacked. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="quiz-1.html">Quiz</a>
+      <a href="ebook.html">Ebook</a>
+      <a href="suite.html">Suite</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+      <a href="support.html">Support</a>
+      <a href="account-deletion.html">Account Deletion</a>
+    </div>
+  </footer>
+
+  <script>
+    const mechanisms = [
+      ['01', 'Confusion',         'How disorientation becomes the entry point'],
+      ['02', 'The Loop',          'Why the same conversations keep happening'],
+      ['03', 'Erosion',           'How self-trust breaks down incrementally'],
+      ['04', 'Contradiction',     'The role of cognitive dissonance in keeping you stuck'],
+      ['05', 'Attachment',        'How intermittent reinforcement creates powerful bonds'],
+      ['06', 'Boundary Failure',  "Why limits don't hold — and what's actually happening when they don't"],
+      ['07', 'Narrative Control', 'Who gets to decide what happened, and what it meant'],
+      ['08', 'Clarity',           'What becomes possible when the pattern is finally visible'],
+    ];
+
+    document.getElementById('mechanisms-list').innerHTML = mechanisms.map(([num, name, desc]) =>
+      `<div class="mechanism-row">
+        <span class="mechanism-num">${num}</span>
+        <div>
+          <p class="mechanism-name">${name}</p>
+          <p class="mechanism-desc">${desc}</p>
+        </div>
+      </div>`
+    ).join('');
+
+    function handlePurchase(e) {
+      e.preventDefault();
+      if (STRIPE_PAYMENT_LINK && !STRIPE_PAYMENT_LINK.includes('YOUR_')) {
+        window.location.href = STRIPE_PAYMENT_LINK;
+      } else {
+        alert('Payment link not yet configured. Replace STRIPE_PAYMENT_LINK in the page source with your Stripe Payment Link URL.');
+      }
+    }
+  </script>
+
+</body>
+</html>

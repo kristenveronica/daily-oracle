@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Am I the Narcissist? — The Pattern. Unpacked.</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    // ── STRIPE ──────────────────────────────────────────
+    // Replace with your Stripe Payment Link for Quiz 2.
+    // Set success URL to: yoursite.com/v2/success.html?product=quiz2
+    const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/YOUR_QUIZ_2_LINK';
+  </script>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">The Pattern<span class="dot">.</span> Unpacked<span class="dot">.</span></a>
+    <a href="quiz-1.html" class="nav-link">← Quiz 1</a>
+  </nav>
+
+  <!-- Hero -->
+  <div class="product-hero">
+    <p class="product-eyebrow">Quiz Two</p>
+    <h1>Am I the Narcissist?</h1>
+    <p class="lead">18 questions. Distinguishes genuine harmful patterns from being gaslit into self-doubt.</p>
+    <div class="divider"></div>
+    <p style="margin-bottom:12px">One of the most common effects of narcissistic abuse is being led to believe you're the problem.</p>
+    <p style="margin-bottom:12px">This quiz helps you understand whether your self-doubt is accurate — or the result of being inside a dynamic that creates it.</p>
+    <div class="price-block">
+      <span class="price">$9</span>
+      <span class="price-note">Take the quiz immediately after purchase</span>
+    </div>
+    <a href="#" onclick="handlePurchase(event)" class="btn btn-primary">Buy — $9</a>
+    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:10px">Secure checkout via Stripe. Your quiz begins immediately after payment.</p>
+  </div>
+
+  <!-- What to expect -->
+  <div class="includes-section">
+    <div class="container--narrow">
+      <p class="section-label">What to expect</p>
+
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">18 questions designed to distinguish empathy and guilt from actual harmful patterns</p>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">Results that directly address the question you're afraid to ask</p>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">Clear language — no hedging, no labels used loosely</p>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">Designed specifically for people who have been told they might be the problem</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Who this is for -->
+  <div class="panel-light">
+    <div class="container--narrow">
+      <h2 style="color:var(--purple-deep);margin-bottom:20px">Who this is for</h2>
+      <p style="margin-bottom:12px">This quiz is for people who genuinely wonder whether they might be the narcissist in their relationship.</p>
+      <p style="margin-bottom:12px">That question itself is significant. Narcissistic individuals rarely ask it.</p>
+      <p style="margin-bottom:32px">Answer honestly. There are no wrong responses.</p>
+
+      <div style="padding:28px;border-left:3px solid var(--mauve);background:var(--bg-soft)">
+        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--purple-deep);font-weight:300;line-height:1.5;margin:0">"The doubt you're carrying may be evidence of the pattern — not evidence that you are the problem."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA repeat -->
+  <div style="background:var(--bg-soft);padding:56px 24px;text-align:center">
+    <div class="container--narrow" style="max-width:460px">
+      <h2 style="color:var(--purple-deep);margin-bottom:12px">Ask the question honestly.</h2>
+      <p style="margin-bottom:28px">18 questions. Clear results. Immediate access after purchase.</p>
+      <a href="#" onclick="handlePurchase(event)" class="btn btn-primary" style="display:inline-flex;margin-bottom:10px">Buy — $9</a>
+      <div>
+        <a href="quiz-1.html" style="font-size:0.78rem;color:var(--text-muted);text-decoration:underline;text-underline-offset:3px">← Start with Quiz 1 first</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Also available -->
+  <div class="panel-light" style="padding-top:48px;padding-bottom:64px">
+    <div class="container--narrow">
+      <p class="section-label" style="margin-bottom:20px">Also available</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <a href="quiz-1.html" style="display:block;padding:20px;border:1px solid var(--border);border-radius:2px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--purple-mid)';this.style.background='var(--bg-soft)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+          <p style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mauve-dark);margin-bottom:6px">Quiz 1 — $9</p>
+          <p style="color:var(--purple-deep);font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:4px">Is This Narcissistic Abuse?</p>
+          <p style="font-size:0.8rem;color:var(--text-muted)">23 questions across five sections →</p>
+        </a>
+        <a href="ebook.html" style="display:block;padding:20px;border:1px solid var(--border);border-radius:2px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--purple-mid)';this.style.background='var(--bg-soft)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+          <p style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mauve-dark);margin-bottom:6px">Ebook — $13</p>
+          <p style="color:var(--purple-deep);font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:4px">The Pattern. Unpacked.</p>
+          <p style="font-size:0.8rem;color:var(--text-muted)">Eight mechanisms of narcissistic abuse →</p>
+        </a>
+        <a href="suite.html" style="display:block;padding:20px;border:1px solid var(--border);border-radius:2px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--purple-mid)';this.style.background='var(--bg-soft)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+          <p style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mauve-dark);margin-bottom:6px">Full Suite — $39</p>
+          <p style="color:var(--purple-deep);font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:4px">Everything. All of it.</p>
+          <p style="font-size:0.8rem;color:var(--text-muted)">Both quizzes + ebook + scripts + full book →</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 The Pattern. Unpacked. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="quiz-1.html">Quiz 1</a>
+      <a href="ebook.html">Ebook</a>
+      <a href="suite.html">Suite</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+      <a href="support.html">Support</a>
+      <a href="account-deletion.html">Account Deletion</a>
+    </div>
+  </footer>
+
+  <script>
+    function handlePurchase(e) {
+      e.preventDefault();
+      if (STRIPE_PAYMENT_LINK && !STRIPE_PAYMENT_LINK.includes('YOUR_')) {
+        window.location.href = STRIPE_PAYMENT_LINK;
+      } else {
+        alert('Payment link not yet configured. Replace STRIPE_PAYMENT_LINK in the page source with your Stripe Payment Link URL.');
+      }
+    }
+  </script>
+
+</body>
+</html>

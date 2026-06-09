@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scripts & One-Liners — The Pattern. Unpacked.</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/YOUR_SCRIPTS_LINK';
+  </script>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">The Pattern<span class="dot">.</span> Unpacked<span class="dot">.</span></a>
+    <a href="suite.html" class="nav-link">Full Suite</a>
+  </nav>
+
+  <!-- Coming soon banner -->
+  <div style="background:var(--mauve-pale);padding:12px 24px;text-align:center;border-bottom:1px solid var(--border)">
+    <p style="font-size:0.78rem;color:var(--purple-mid)">This resource is in development. <a href="#notify" style="color:var(--purple-mid);font-weight:500;text-decoration:underline;text-underline-offset:3px">Get notified when it launches →</a></p>
+  </div>
+
+  <!-- Hero -->
+  <div class="product-hero">
+    <p class="product-eyebrow">Scripts &amp; One-Liners — In Development</p>
+    <h1>I need to know what to say.</h1>
+    <p class="lead">Practical language for the moments when you don't have the words — and can't afford to lose them.</p>
+    <div class="divider"></div>
+    <p style="margin-bottom:12px">Understanding the pattern is one thing. Knowing what to say in the middle of it is another.</p>
+    <p style="margin-bottom:12px">Scripts &amp; One-Liners is a practical guide for use in real time — during conflict, after gaslighting, when setting a limit, or when trying to de-escalate without losing ground.</p>
+    <p>No therapy-speak. No scripts that require the other person to cooperate. Language that works even when they don't.</p>
+  </div>
+
+  <!--
+    IMAGE ZONE
+    Suggested: a hand holding a pen, or simple geometric shapes
+    suggesting communication/clarity. Clean and minimal.
+    Dimensions: 1200×480px.
+  -->
+  <div class="image-zone image-zone--landscape" style="max-height:280px">
+    <div class="image-zone-art light-emergence"></div>
+  </div>
+
+  <!-- What's inside -->
+  <div class="includes-section">
+    <div class="container--narrow">
+      <p class="section-label">What's inside</p>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">Responses for when your reality is being questioned or dismissed</p>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">Language for setting limits without escalating conflict</p>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">One-liners for exiting conversations that are going in circles</p>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">Responses for when you're being blamed for someone else's behaviour</p>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">Language for naming what's happening without escalating it</p>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <p class="include-text">Scripts for communication after separation or reduced contact</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notify form -->
+  <div id="notify" class="panel-dark" style="padding:56px 24px">
+    <div class="container--narrow">
+      <h2 style="margin-bottom:12px">Be the first to know.</h2>
+      <p style="margin-bottom:28px">Leave your email and we'll let you know when Scripts &amp; One-Liners is available — with an early access discount.</p>
+
+      <!--
+        FORM ACTION — Replace with your email provider endpoint.
+        Options: Mailchimp, ConvertKit, Klaviyo, Formspree, etc.
+      -->
+      <form id="notify-form" style="display:flex;flex-direction:column;gap:12px">
+        <input
+          type="email"
+          id="notify-email"
+          placeholder="Your email address"
+          required
+          style="padding:16px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(196,168,204,0.3);border-radius:2px;color:var(--text-light);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;-webkit-appearance:none"
+          onfocus="this.style.borderColor='rgba(196,168,204,0.6)'"
+          onblur="this.style.borderColor='rgba(196,168,204,0.3)'"
+        />
+        <button type="submit" class="btn btn-primary">Notify me when it launches</button>
+      </form>
+      <p id="notify-success" style="display:none;color:var(--mauve-light);font-size:0.85rem;margin-top:12px">Thank you. We'll be in touch.</p>
+    </div>
+  </div>
+
+  <!-- Available now -->
+  <div class="panel-light" style="padding-top:48px;padding-bottom:64px">
+    <div class="container--narrow">
+      <p class="section-label" style="margin-bottom:20px">Available now</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <a href="ebook.html" style="display:block;padding:20px;border:1px solid var(--border);border-radius:2px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--purple-mid)';this.style.background='var(--bg-soft)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+          <p style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mauve-dark);margin-bottom:6px">Ebook — $14</p>
+          <p style="color:var(--purple-deep);font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:4px">The Gaslighting Loop</p>
+          <p style="font-size:0.8rem;color:var(--text-muted)">Understand the mechanism first →</p>
+        </a>
+        <a href="quiz-1.html" style="display:block;padding:20px;border:1px solid var(--border);border-radius:2px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--purple-mid)';this.style.background='var(--bg-soft)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+          <p style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--mauve-dark);margin-bottom:6px">Quiz — $9</p>
+          <p style="color:var(--purple-deep);font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:4px">Are you in a narcissistically abusive relationship?</p>
+          <p style="font-size:0.8rem;color:var(--text-muted)">Take the quiz →</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 The Pattern. Unpacked. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="quiz-1.html">Quiz</a>
+      <a href="ebook.html">Ebook</a>
+      <a href="suite.html">Suite</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+      <a href="support.html">Support</a>
+      <a href="account-deletion.html">Account Deletion</a>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('notify-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // TODO: Replace with your actual email collection POST
+      // fetch('https://your-email-service/subscribe', { method:'POST', body: JSON.stringify({email}) })
+      document.getElementById('notify-form').style.display = 'none';
+      document.getElementById('notify-success').style.display = 'block';
+    });
+  </script>
+
+</body>
+</html>
