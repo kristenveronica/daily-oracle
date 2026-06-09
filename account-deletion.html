@@ -29,6 +29,12 @@
     .delete-cta p { font-size: 0.93rem; color: var(--text); margin-bottom: 12px; }
     .delete-btn { display: inline-block; background: var(--purple-deep); color: #fff !important; text-decoration: none !important; padding: 13px 24px; border-radius: 999px; font-size: 0.92rem; font-weight: 600; }
     .delete-btn:hover { opacity: 0.9; }
+    .delete-email { font-size: 1.05rem; font-weight: 600; color: var(--purple-deep); margin: 4px 0 16px; user-select: all; word-break: break-all; }
+    .delete-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .delete-actions .delete-btn { flex: 1 1 auto; min-width: 220px; text-align: center; cursor: pointer; font-family: inherit; -webkit-appearance: none; appearance: none; }
+    .delete-btn-secondary { background: transparent; color: var(--purple-deep) !important; border: 1px solid var(--mauve); }
+    .delete-btn-secondary.copied { background: var(--mauve-pale); border-color: var(--mauve-dark); color: var(--mauve-dark) !important; }
+    .delete-helper { font-size: 0.82rem; color: var(--text-muted); margin-top: 16px; line-height: 1.65; }
     .delete-note { background: #fff; border-left: 3px solid var(--mauve); border-radius: 8px; padding: 14px 18px; margin: 16px 0; }
     .delete-note p { font-size: 0.9rem; color: var(--text); margin: 0; line-height: 1.7; }
   </style>
@@ -60,8 +66,13 @@
       <h2>Option 2 — Request deletion by email</h2>
       <p>If you can't access the app, email us from the address on your account and we'll delete it for you. We'll action verified requests within 30 days.</p>
       <div class="delete-cta">
-        <p>Tap below to open a pre-filled deletion request (please send it from the email on your account):</p>
-        <a class="delete-btn" href="mailto:hello@thedailyoracle.org?subject=Account%20Deletion%20Request&amp;body=I%20would%20like%20to%20permanently%20delete%20my%20The%20Daily%20Oracle%20account%20and%20all%20associated%20data.%0A%0AAccount%20email%3A%20%0A%0AI%20understand%20this%20is%20permanent%20and%20cannot%20be%20undone.">Request account deletion</a>
+        <p>Send your account-deletion request to:</p>
+        <p class="delete-email" id="supportEmail">hello@thedailyoracle.org</p>
+        <div class="delete-actions">
+          <button type="button" class="delete-btn delete-btn-secondary" id="copyEmailBtn" onclick="copySupportEmail()">Copy Email Address</button>
+          <a class="delete-btn" href="mailto:hello@thedailyoracle.org?subject=Account%20Deletion%20Request&amp;body=I%20would%20like%20to%20permanently%20delete%20my%20The%20Daily%20Oracle%20account%20and%20all%20associated%20data.%0A%0AAccount%20email%3A%20%0A%0AI%20understand%20this%20is%20permanent%20and%20cannot%20be%20undone.">Request Account Deletion</a>
+        </div>
+        <p class="delete-helper">If the email draft does not open on your device, simply send an email to hello@thedailyoracle.org from the email address associated with your account.</p>
       </div>
     </div>
 
@@ -108,6 +119,37 @@
       <a href="account-deletion.html">Account Deletion</a>
     </div>
   </footer>
+
+  <script>
+    function copySupportEmail() {
+      var email = 'hello@thedailyoracle.org';
+      var btn = document.getElementById('copyEmailBtn');
+      function done() {
+        btn.textContent = 'Copied ✓';
+        btn.classList.add('copied');
+        setTimeout(function () {
+          btn.textContent = 'Copy Email Address';
+          btn.classList.remove('copied');
+        }, 2000);
+      }
+      function fallback() {
+        var ta = document.createElement('textarea');
+        ta.value = email;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(done, fallback);
+      } else {
+        fallback();
+      }
+    }
+  </script>
 
 </body>
 </html>
