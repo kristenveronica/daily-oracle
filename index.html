@@ -102,10 +102,12 @@
       position: relative;
       border-radius: 30px;
       overflow: hidden;
-      background: var(--bg-white);
+      background: linear-gradient(180deg, #FAF5E9 0%, #F4EAD3 58%, #ECE0C6 100%);
       aspect-ratio: 9 / 19;
       display: flex;
       flex-direction: column;
+      box-shadow: inset 0 0 0 1px rgba(176, 138, 87, 0.10),
+                  inset 0 -26px 46px rgba(95, 111, 88, 0.06);
     }
 
     .phone-status {
@@ -123,10 +125,18 @@
 
     /* App-style welcome screen (mirrors the in-app onboarding) */
     .phone-hero {
+      position: relative;
       width: 100%;
       height: 34%;
       overflow: hidden;
       flex-shrink: 0;
+    }
+    /* Melt the photo softly into the warm parchment below */
+    .phone-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 62%, rgba(250, 245, 233, 0.7) 100%);
     }
     .phone-hero img {
       width: 100%;
@@ -137,14 +147,29 @@
     }
 
     .phone-welcome {
+      position: relative;
       flex: 1;
-      padding: 18px 20px 20px;
+      padding: 16px 20px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      gap: 9px;
+      gap: 8px;
+      /* Soft top light + a misty olive landscape rising from the bottom */
+      background:
+        radial-gradient(78% 38% at 50% -10%, rgba(255, 253, 246, 0.9) 0%, rgba(255, 253, 246, 0) 62%),
+        radial-gradient(140% 60% at 50% 122%, rgba(95, 111, 88, 0.42) 0%, rgba(95, 111, 88, 0) 56%),
+        radial-gradient(84% 44% at 14% 126%, rgba(74, 91, 71, 0.34) 0%, transparent 54%),
+        radial-gradient(84% 44% at 88% 122%, rgba(122, 138, 94, 0.26) 0%, transparent 54%);
+    }
+
+    .phone-compass {
+      width: 22px;
+      height: 22px;
+      margin-bottom: 1px;
+      opacity: 0.9;
+      filter: drop-shadow(0 1px 1px rgba(120, 90, 50, 0.18));
     }
 
     .phone-eyebrow {
@@ -287,8 +312,12 @@
       letter-spacing: -0.01em;
     }
 
+    /* A touch larger on desktop; always fits on the smallest phones */
     @media (min-width: 720px) {
-      .app-stage-title { font-size: 1.55rem; }
+      .phone-mock { width: 264px; }
+    }
+    @media (max-width: 380px) {
+      .phone-mock { width: 80vw; }
     }
 
     /* ─── Featured wrap ──────────────────────────────────────────────── */
@@ -1152,9 +1181,14 @@
             <span class="phone-status-icons"><i></i><i></i><i class="batt"></i></span>
           </div>
           <div class="phone-hero">
-            <img src="assets/web images/Odessa.png" alt="Odessa, your Daily Oracle guide">
+            <img src="assets/web images/Odessa.jpg" alt="Odessa, your Daily Oracle guide">
           </div>
           <div class="phone-welcome">
+            <svg class="phone-compass" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 1.5 13.5 10.5 22.5 12 13.5 13.5 12 22.5 10.5 13.5 1.5 12 10.5 10.5Z" fill="#B89A5D"/>
+              <path d="M12 5 12.7 11.3 19 12 12.7 12.7 12 19 11.3 12.7 5 12 11.3 11.3Z" fill="#9A8048" opacity="0.55"/>
+              <circle cx="12" cy="12" r="1.5" fill="#7C6A3E"/>
+            </svg>
             <p class="phone-eyebrow">Now Available</p>
             <h2 class="phone-headline">The Daily Oracle App</h2>
             <p class="phone-sub">Carry Odessa in your pocket. Daily wisdom and check-ins, clarity for difficult moments, and a 52-week journey towards liberation from difficult relationships.</p>
@@ -1330,6 +1364,17 @@
     // animation plays in the phone and only that platform's steps are shown.
     function openInstall(platform) {
       hideChoice();
+
+      // Once the web app is live, send people straight INTO it — that's the
+      // only place "Add to Home Screen" actually installs the app. The app
+      // shows the matching steps on arrival (?install=ios|android).
+      if (APP_URL) {
+        const sep = APP_URL.indexOf('?') === -1 ? '?' : '&';
+        window.location.href = APP_URL + sep + 'install=' + platform;
+        return;
+      }
+
+      // Fallback preview (until APP_URL is set): show the steps inline.
       const modal = document.getElementById('install-overlay');
       modal.style.display = 'flex';
 
@@ -1376,7 +1421,7 @@
       title:    'The Daily Oracle Collection',
       desc:     'A complete collection designed to help you regain clarity, strengthen self-trust, and navigate difficult dynamics more confidently.',
       art:      'art-suite',
-      img:      'assets/web images/Daily Oracle Collection Cover 2.png',
+      img:      'assets/web images/Daily Oracle Collection Cover 2.jpg',
       price:    '$25',
       save:     'Save $6',
       includes: ['Both quizzes', 'A Field Guide to Reality Distortion'],
@@ -1392,7 +1437,7 @@
         subtitle: 'When Something Feels Off and You Can\'t Name It',
         desc:     'A clear guide to the conversations, distortions, and loops that disrupt self-trust, so you can regain clarity and feel more grounded in your own perception.',
         art:      'art-ebook1',
-        img:      'assets/web images/Reality Distortion Ebook Cover.png',
+        img:      'assets/web images/Reality Distortion Ebook Cover.jpg',
         price:    '$17',
         cta:      'Get the Guide',
       },
@@ -1402,7 +1447,7 @@
         title: 'Am I Imagining This, or Is Something Actually Wrong?',
         desc:  'A clarity quiz to help you understand what you\'re experiencing and trust your perception again.',
         art:   'art-quiz1',
-        img:   'assets/web images/Quiz 1 Cover.png',
+        img:   'assets/web images/Quiz 1 Cover.jpg',
         price: '$7',
         cta:   'Take the Quiz',
         upsell: true,
@@ -1413,7 +1458,7 @@
         title: 'Is It Actually Me, or Have I Been Gaslit?',
         desc:  'A reflective quiz to help you separate self-awareness from self-blame and regain confidence in your own reality.',
         art:   'art-quiz2',
-        img:   'assets/web images/Quiz 2 Cover.png',
+        img:   'assets/web images/Quiz 2 Cover.jpg',
         price: '$7',
         cta:   'Take the Quiz',
         upsell: true,
@@ -1450,8 +1495,8 @@
       const subtitle = p.subtitle ? `<p class="pcard-subtitle">${p.subtitle}</p>` : '';
       const imageEl  = p.img
         ? p.featured
-          ? `<img src="${p.img}" alt="${p.title}">`
-          : `<img src="${p.img}" alt="${p.title}" style="width:100%;height:auto;display:block;">`
+          ? `<img src="${p.img}" alt="${p.title}" loading="lazy" decoding="async">`
+          : `<img src="${p.img}" alt="${p.title}" loading="lazy" decoding="async" style="width:100%;height:auto;display:block;">`
         : `<div class="pcard-art ${p.art}"></div>`;
 
       const ctaEl = p.upsell
