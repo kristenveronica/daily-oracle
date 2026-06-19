@@ -79,6 +79,218 @@
       margin: 36px auto 16px;
     }
 
+    /* ─── App feature stage (copy + mock phone) ──────────────────────── */
+
+    /* Everything about the app lives on the phone screen itself. */
+    .app-stage {
+      margin: 0 auto 36px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* ── Mock phone ── */
+    .phone-mock {
+      width: 248px;
+      flex-shrink: 0;
+      background: #0d0b09;
+      border-radius: 38px;
+      padding: 9px;
+      box-shadow: 0 20px 54px rgba(0, 0, 0, 0.42), inset 0 0 0 1.5px rgba(184,154,93,0.18);
+    }
+
+    .phone-screen {
+      position: relative;
+      border-radius: 30px;
+      overflow: hidden;
+      background: var(--bg-white);
+      aspect-ratio: 9 / 19;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .phone-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 18px 5px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--purple-deep);
+    }
+    .phone-status-icons { display: flex; align-items: center; gap: 3px; }
+    .phone-status-icons i { width: 5px; height: 7px; border-radius: 1px; background: var(--purple-deep); opacity: 0.85; }
+    .phone-status-icons i.batt { width: 13px; }
+
+    /* App-style welcome screen (mirrors the in-app onboarding) */
+    .phone-hero {
+      width: 100%;
+      height: 34%;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .phone-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 26%;
+      display: block;
+    }
+
+    .phone-welcome {
+      flex: 1;
+      padding: 18px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 9px;
+    }
+
+    .phone-eyebrow {
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mauve-dark);
+      margin: 0;
+    }
+
+    .phone-headline {
+      font-family: 'Lora', Georgia, serif;
+      font-weight: 600;
+      font-size: 1.18rem;
+      line-height: 1.2;
+      color: var(--purple-deep);
+      margin: 0;
+    }
+
+    .phone-sub {
+      font-size: 0.6rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+      margin: 2px 0 0;
+    }
+
+    .phone-dl-btn {
+      margin-top: 12px;
+      width: 100%;
+      background: var(--purple-mid);
+      color: var(--text-light);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 15px 16px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.18s, transform 0.18s;
+      box-shadow: 0 4px 16px rgba(59, 63, 36, 0.3);
+    }
+    .phone-dl-btn:hover { background: var(--purple-accent); transform: translateY(-1px); }
+
+    .phone-secondary {
+      font-size: 0.55rem;
+      letter-spacing: 0.03em;
+      color: var(--text-muted);
+      margin: 8px 0 0;
+    }
+
+    /* ── Choose-device pop-up (inside the phone) ── */
+    .phone-choice {
+      position: absolute;
+      inset: 0;
+      background: rgba(36, 28, 24, 0.5);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s;
+    }
+    .phone-choice.show { opacity: 1; visibility: visible; }
+
+    .phone-choice-sheet {
+      background: var(--bg-white);
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      padding: 12px 14px 18px;
+      transform: translateY(100%);
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .phone-choice.show .phone-choice-sheet { transform: translateY(0); }
+
+    .phone-choice-grab {
+      width: 32px; height: 4px; border-radius: 2px;
+      background: var(--border);
+      margin: 0 auto 12px;
+    }
+    .phone-choice-title {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      text-align: center;
+      margin: 0 0 12px;
+    }
+
+    /* Store badges (reused in the pop-up) */
+    .store-badge {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 11px;
+      padding: 9px 16px;
+      margin-bottom: 9px;
+      text-decoration: none;
+      cursor: pointer;
+      text-align: left;
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+      animation: badge-pop 0.34s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    .phone-choice.show .store-badge:nth-child(3) { animation-delay: 0.08s; }
+    .phone-choice.show .store-badge:nth-child(4) { animation-delay: 0.15s; }
+    .store-badge:last-child { margin-bottom: 0; }
+    .store-badge:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.28); }
+    .store-badge svg { flex-shrink: 0; display: block; }
+
+    @keyframes badge-pop {
+      0% { opacity: 0; transform: translateY(10px) scale(0.94); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .store-badge-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.05;
+      color: #fff;
+    }
+    .store-badge-text small {
+      font-size: 0.56rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      opacity: 0.92;
+    }
+    .store-badge-text strong {
+      font-size: 1.04rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    @media (min-width: 720px) {
+      .app-stage-title { font-size: 1.55rem; }
+    }
+
     /* ─── Featured wrap ──────────────────────────────────────────────── */
 
     .featured-wrap {
@@ -432,6 +644,389 @@
       transform: none;
     }
 
+    /* ─── Install (Add to Home Screen) modal ─────────────────────────── */
+
+    .install-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(36, 28, 24, 0.62);
+      z-index: 950;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px 16px;
+      overflow-y: auto;
+    }
+
+    .install-box {
+      background: var(--bg-white);
+      border-radius: 18px;
+      max-width: 440px;
+      width: 100%;
+      margin: auto;
+      padding: 30px 26px 26px;
+      position: relative;
+      animation: upsellIn 0.22s ease both;
+    }
+
+    .install-close {
+      position: absolute;
+      top: 14px; right: 16px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px 8px;
+    }
+    .install-close:hover { color: var(--text); }
+
+    .install-eyebrow {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mauve-dark);
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .install-title {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--purple-deep);
+      line-height: 1.3;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    /* ── Animated phone tutorial ──────────────────────────────────────
+       A looping ~5s demo plays inside the phone showing exactly where to
+       tap. iOS and Android each have their own track; only the active one
+       is shown (.install-phone[data-platform="ios"|"android"]).            */
+
+    .install-phone {
+      width: 166px;
+      height: 270px;
+      margin: 0 auto 8px;
+      border: 5px solid var(--purple-deep);
+      border-radius: 26px;
+      background: #000;
+      padding: 6px;
+      position: relative;
+    }
+    .tut-screen {
+      position: absolute;
+      inset: 6px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--bg-white);
+      display: none;
+    }
+    .install-phone[data-platform="ios"] #tut-ios,
+    .install-phone[data-platform="android"] #tut-android { display: block; }
+
+    /* Browser chrome */
+    .tut-url {
+      position: absolute;
+      top: 8px; left: 10px; right: 10px;
+      height: 16px;
+      background: var(--bg-soft);
+      border-radius: 9px;
+      font-size: 0.46rem;
+      color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center;
+      letter-spacing: 0.02em;
+    }
+    .tut-android .tut-url { right: 26px; }
+    .tut-menu-dots {
+      position: absolute;
+      top: 7px; right: 7px;
+      width: 16px; height: 18px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1.5px;
+      border-radius: 5px;
+      z-index: 3;
+    }
+    .tut-menu-dots i { width: 2.5px; height: 2.5px; border-radius: 50%; background: var(--text-mid); }
+
+    /* App preview (center) */
+    .tut-appicon {
+      position: absolute;
+      top: 78px; left: 50%; transform: translateX(-50%);
+      width: 50px; height: 50px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.16);
+    }
+    .tut-appname {
+      position: absolute;
+      top: 134px; left: 0; right: 0;
+      text-align: center;
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.66rem;
+      color: var(--purple-deep);
+    }
+
+    /* iOS Safari bottom bar */
+    .tut-safari {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 30px;
+      background: var(--bg-soft);
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-around;
+      color: var(--text-mid);
+    }
+    .tut-share-btn {
+      width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 6px;
+      animation: ios-share-pulse 5s ease-in-out infinite;
+    }
+    @keyframes ios-share-pulse {
+      0%, 10% { background: transparent; }
+      14%, 22% { background: rgba(184,154,93,0.35); box-shadow: 0 0 0 2px var(--mauve); }
+      26%, 100% { background: transparent; box-shadow: none; }
+    }
+
+    /* iOS share sheet */
+    .tut-sheet {
+      position: absolute;
+      left: 8px; right: 8px; bottom: 6px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 6px;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.14);
+      transform: translateY(135%);
+      animation: ios-sheet 5s ease-in-out infinite;
+    }
+    .tut-sheet-grab { width: 26px; height: 3px; border-radius: 2px; background: var(--border); margin: 0 auto 6px; }
+    .tut-row {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.56rem; color: var(--purple-deep);
+      padding: 7px 8px; border-radius: 7px; margin-bottom: 4px;
+    }
+    .tut-row:last-child { margin-bottom: 0; }
+    .tut-row.dim { color: var(--text-muted); }
+    .tut-row.hl {
+      background: var(--mauve-pale);
+      box-shadow: inset 0 0 0 1.5px var(--mauve);
+      font-weight: 600;
+    }
+    .tut-row .ic { color: var(--mauve-dark); font-size: 0.8rem; }
+    @keyframes ios-sheet {
+      0%, 24% { transform: translateY(135%); }
+      30%, 56% { transform: translateY(0); }
+      62%, 100% { transform: translateY(135%); }
+    }
+
+    /* Android dropdown menu */
+    .tut-dropdown {
+      position: absolute;
+      top: 24px; right: 8px;
+      width: 96px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 5px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.16);
+      transform-origin: top right;
+      transform: scale(0.6);
+      opacity: 0;
+      animation: and-menu 5s ease-in-out infinite;
+    }
+    @keyframes and-menu {
+      0%, 24% { transform: scale(0.6); opacity: 0; }
+      28%, 56% { transform: scale(1); opacity: 1; }
+      62%, 100% { transform: scale(0.6); opacity: 0; }
+    }
+    .tut-menu-dots-hl {
+      position: absolute;
+      top: 7px; right: 7px;
+      width: 16px; height: 18px;
+      border-radius: 5px;
+      z-index: 2;
+      animation: and-dots-pulse 5s ease-in-out infinite;
+    }
+    @keyframes and-dots-pulse {
+      0%, 10% { background: transparent; }
+      14%, 22% { background: rgba(184,154,93,0.35); box-shadow: 0 0 0 2px var(--mauve); }
+      26%, 100% { background: transparent; box-shadow: none; }
+    }
+
+    /* Done overlay */
+    .tut-done {
+      position: absolute;
+      inset: 0;
+      background: var(--bg-white);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 8px;
+      opacity: 0;
+      animation: tut-done 5s ease-in-out infinite;
+    }
+    .tut-check {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--purple-mid); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .tut-done span { font-size: 0.62rem; color: var(--purple-deep); font-weight: 500; }
+    @keyframes tut-done {
+      0%, 58% { opacity: 0; }
+      64%, 90% { opacity: 1; }
+      96%, 100% { opacity: 0; }
+    }
+
+    /* Animated finger / tap cursor */
+    .tut-cursor {
+      position: absolute;
+      top: -9px; left: -9px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: rgba(36,28,24,0.28);
+      border: 2px solid rgba(36,28,24,0.55);
+      z-index: 5;
+      pointer-events: none;
+    }
+    #tut-ios .tut-cursor  { animation: cur-ios 5s ease-in-out infinite; }
+    #tut-android .tut-cursor { animation: cur-and 5s ease-in-out infinite; }
+
+    @keyframes cur-ios {
+      0%   { transform: translate(78px,120px) scale(1); opacity: 0; }
+      6%   { opacity: 1; }
+      16%  { transform: translate(78px,250px) scale(1); }
+      20%  { transform: translate(78px,250px) scale(0.7); }
+      24%  { transform: translate(78px,250px) scale(1); }
+      44%  { transform: translate(78px,182px) scale(1); opacity: 1; }
+      48%  { transform: translate(78px,182px) scale(0.7); }
+      52%  { transform: translate(78px,182px) scale(1); }
+      58%  { opacity: 1; }
+      62%  { transform: translate(78px,182px) scale(1); opacity: 0; }
+      100% { transform: translate(78px,120px) scale(1); opacity: 0; }
+    }
+    @keyframes cur-and {
+      0%   { transform: translate(78px,120px) scale(1); opacity: 0; }
+      6%   { opacity: 1; }
+      16%  { transform: translate(140px,16px) scale(1); }
+      20%  { transform: translate(140px,16px) scale(0.7); }
+      24%  { transform: translate(140px,16px) scale(1); }
+      44%  { transform: translate(100px,64px) scale(1); opacity: 1; }
+      48%  { transform: translate(100px,64px) scale(0.7); }
+      52%  { transform: translate(100px,64px) scale(1); }
+      58%  { opacity: 1; }
+      62%  { transform: translate(100px,64px) scale(1); opacity: 0; }
+      100% { transform: translate(78px,120px) scale(1); opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tut-cursor, .tut-sheet, .tut-dropdown, .tut-done,
+      .tut-share-btn, .tut-menu-dots-hl { animation: none; }
+      .tut-sheet { transform: translateY(0); }
+      .tut-dropdown { transform: scale(1); opacity: 1; }
+    }
+
+    .install-phone-caption {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 8px 0 20px;
+    }
+
+    /* Platform step blocks */
+    .install-step {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .install-step--active {
+      border-color: var(--mauve);
+      background: var(--mauve-pale);
+    }
+    .install-step-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--purple-deep);
+      margin-bottom: 10px;
+    }
+    .install-step ol {
+      margin: 0;
+      padding-left: 0;
+      list-style: none;
+      counter-reset: step;
+    }
+    .install-step li {
+      counter-increment: step;
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+      padding-left: 26px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+    .install-step li:last-child { margin-bottom: 0; }
+    .install-step li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0; top: 1px;
+      width: 17px; height: 17px;
+      border-radius: 50%;
+      background: var(--mauve);
+      color: var(--bg-white);
+      font-size: 0.6rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .install-step b { color: var(--purple-deep); }
+    .ios-share {
+      display: inline-flex;
+      vertical-align: -2px;
+      margin: 0 1px;
+    }
+
+    .install-open-app {
+      background: var(--purple-mid);
+      color: var(--text-light);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      padding: 14px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      width: 100%;
+      margin-top: 18px;
+      transition: background 0.18s;
+    }
+    .install-open-app:hover { background: var(--purple-accent); }
+
+    .install-got-it {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-top: 14px;
+      padding: 4px;
+    }
+    .install-got-it:hover { color: var(--text); }
+
     /* ─── Upsell modal ───────────────────────────────────────────────── */
 
     .upsell-overlay {
@@ -547,6 +1142,52 @@
   <!-- Store -->
   <div class="store-section">
 
+    <!-- App: direct download (main feature) -->
+    <div class="app-stage">
+      <!-- Mock phone — mirrors the app's welcome screen; all the app copy lives here -->
+      <div class="phone-mock">
+        <div class="phone-screen">
+          <div class="phone-status">
+            <span>9:41</span>
+            <span class="phone-status-icons"><i></i><i></i><i class="batt"></i></span>
+          </div>
+          <div class="phone-hero">
+            <img src="assets/web images/Odessa.png" alt="Odessa, your Daily Oracle guide">
+          </div>
+          <div class="phone-welcome">
+            <p class="phone-eyebrow">Now Available</p>
+            <h2 class="phone-headline">The Daily Oracle App</h2>
+            <p class="phone-sub">Carry Odessa in your pocket. Daily wisdom and check-ins, clarity for difficult moments, and a 52-week journey towards liberation from difficult relationships.</p>
+            <button type="button" class="phone-dl-btn" onclick="revealChoice()">Click to Download</button>
+            <p class="phone-secondary">Works on iPhone &amp; Android · No app store</p>
+          </div>
+
+          <!-- Pop-up: choose your device -->
+          <div class="phone-choice" id="phone-choice" onclick="hideChoice(event)">
+            <div class="phone-choice-sheet">
+              <div class="phone-choice-grab"></div>
+              <p class="phone-choice-title">Choose your device</p>
+              <button type="button" class="store-badge" onclick="openInstall('ios')" aria-label="Download for iPhone">
+                <svg width="22" height="26" viewBox="0 0 22 26" fill="#fff" aria-hidden="true">
+                  <path d="M18.3 13.8c0-3.1 2.5-4.5 2.6-4.6-1.4-2.1-3.6-2.4-4.4-2.4-1.9-.2-3.6 1.1-4.6 1.1-.9 0-2.4-1.1-3.9-1-2 0-3.9 1.2-4.9 3-2.1 3.6-.5 9 1.5 11.9 1 1.4 2.1 3 3.6 2.9 1.5-.1 2-.9 3.8-.9s2.2.9 3.8.9 2.6-1.4 3.6-2.8c1.1-1.6 1.6-3.2 1.6-3.3-.1 0-3.1-1.2-3.2-4.8zM15.2 4.9c.8-1 1.4-2.4 1.2-3.8-1.2.1-2.6.8-3.4 1.8-.7.9-1.4 2.3-1.2 3.6 1.3.1 2.6-.7 3.4-1.6z"/>
+                </svg>
+                <span class="store-badge-text"><small>Download for</small><strong>iPhone</strong></span>
+              </button>
+              <button type="button" class="store-badge" onclick="openInstall('android')" aria-label="Download for Android">
+                <svg width="24" height="26" viewBox="0 0 512 512" aria-hidden="true">
+                  <path fill="#00D2FF" d="M48 78 268 256 48 434c-6-5-10-13-10-22V100c0-9 4-17 10-22z"/>
+                  <path fill="#00E676" d="M335 191 268 256 48 78c4-3 9-4 14-4 4 0 9 1 13 3l260 114z"/>
+                  <path fill="#FF3D00" d="M335 321 75 435c-4 2-9 3-13 3-5 0-10-1-14-4l220-178 67 65z"/>
+                  <path fill="#FFC400" d="M432 234c8 4 13 13 13 22s-5 18-13 22l-97 43-67-65 67-65 97 43z"/>
+                </svg>
+                <span class="store-badge-text"><small>Download for</small><strong>Android</strong></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Featured: Complete Collection -->
     <div class="featured-wrap" id="collection-grid"></div>
 
@@ -558,6 +1199,89 @@
     </div>
     <div class="resources-grid" id="resources-grid"></div>
 
+  </div>
+
+  <!-- Install (Add to Home Screen) modal -->
+  <div class="install-overlay" id="install-overlay" style="display:none" onclick="if(event.target===this)closeInstall()">
+    <div class="install-box">
+      <button class="install-close" type="button" onclick="closeInstall()">×</button>
+      <p class="install-eyebrow">Add to your home screen</p>
+      <h3 class="install-title" id="install-title">Get the Daily Oracle app</h3>
+
+      <div class="install-phone" id="install-phone" data-platform="ios">
+
+        <!-- iPhone (Safari) tutorial -->
+        <div class="tut-screen" id="tut-ios">
+          <div class="tut-url">app.thedailyoracle.org</div>
+          <img src="assets/web images/Daily Oracle App Icon.png" alt="" class="tut-appicon">
+          <div class="tut-appname">The Daily Oracle</div>
+          <div class="tut-safari">
+            <span>‹</span><span>›</span>
+            <span class="tut-share-btn">
+              <svg width="11" height="13" viewBox="0 0 15 18" fill="none" aria-hidden="true"><path d="M7.5 2v9M7.5 2 4.5 5M7.5 2 10.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 8H2v8.5h11V8h-1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span>▢</span>
+          </div>
+          <div class="tut-sheet">
+            <div class="tut-sheet-grab"></div>
+            <div class="tut-row hl"><span>Add to Home Screen</span><span class="ic">+</span></div>
+            <div class="tut-row dim"><span>Add Bookmark</span><span class="ic">★</span></div>
+          </div>
+          <div class="tut-done"><div class="tut-check">✓</div><span>Added to Home Screen</span></div>
+          <div class="tut-cursor"></div>
+        </div>
+
+        <!-- Android (Chrome) tutorial -->
+        <div class="tut-screen tut-android" id="tut-android">
+          <div class="tut-url">app.thedailyoracle.org</div>
+          <div class="tut-menu-dots"><i></i><i></i><i></i></div>
+          <div class="tut-menu-dots-hl"></div>
+          <img src="assets/web images/Daily Oracle App Icon.png" alt="" class="tut-appicon">
+          <div class="tut-appname">The Daily Oracle</div>
+          <div class="tut-dropdown">
+            <div class="tut-row dim"><span>New tab</span></div>
+            <div class="tut-row hl"><span>Add to Home screen</span><span class="ic">+</span></div>
+            <div class="tut-row dim"><span>Share…</span></div>
+          </div>
+          <div class="tut-done"><div class="tut-check">✓</div><span>Added to Home screen</span></div>
+          <div class="tut-cursor"></div>
+        </div>
+
+      </div>
+      <p class="install-phone-caption" id="install-caption">It installs like a normal app — its own icon, full screen, no app store.</p>
+
+      <div class="install-step" id="install-ios">
+        <div class="install-step-head">
+          <svg width="15" height="18" viewBox="0 0 15 18" fill="none" aria-hidden="true">
+            <path d="M7.5 1v10M7.5 1 4 4.5M7.5 1 11 4.5" stroke="#9A8048" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 8H1.5v8.5h12V8H12" stroke="#9A8048" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          On iPhone &amp; iPad (Safari)
+        </div>
+        <ol>
+          <li>Tap the <b>Share</b> button
+            <svg class="ios-share" width="13" height="15" viewBox="0 0 15 18" fill="none" aria-hidden="true"><path d="M7.5 1v10M7.5 1 4 4.5M7.5 1 11 4.5" stroke="#6B5C4A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 8H1.5v8.5h12V8H12" stroke="#6B5C4A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            at the bottom of Safari.</li>
+          <li>Scroll down and tap <b>Add to Home Screen</b>.</li>
+          <li>Tap <b>Add</b> in the top corner.</li>
+        </ol>
+      </div>
+
+      <div class="install-step" id="install-android">
+        <div class="install-step-head">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#9A8048" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+          On Android (Chrome)
+        </div>
+        <ol>
+          <li>Tap the <b>⋮ menu</b> in the top-right corner.</li>
+          <li>Tap <b>Add to Home screen</b> (or <b>Install app</b>).</li>
+          <li>Tap <b>Add</b> to confirm.</li>
+        </ol>
+      </div>
+
+      <a href="#" id="install-open-app" class="install-open-app" target="_blank" rel="noopener">Open the App →</a>
+      <button type="button" class="install-got-it" onclick="closeInstall()">Got it</button>
+    </div>
   </div>
 
   <!-- Upsell modal -->
@@ -593,6 +1317,56 @@
       ebook1:     'https://buy.stripe.com/dRmaEYehre7wbrefXzdfG0a',
       suite:      'https://buy.stripe.com/8x2cN6b5f4wWana8v7dfG0d',
     };
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  APP URL  — the public address of the Daily Oracle web app (PWA).
+    //  Paste it here once the app is deployed (e.g. 'https://app.thedailyoracle.org').
+    //  The install instructions open the app, then the user taps
+    //  "Add to Home Screen" while ON the app to install it.
+    // ═══════════════════════════════════════════════════════════════════
+    const APP_URL = '';
+
+    // Each badge opens instructions for ITS platform only: the matching
+    // animation plays in the phone and only that platform's steps are shown.
+    function openInstall(platform) {
+      hideChoice();
+      const modal = document.getElementById('install-overlay');
+      modal.style.display = 'flex';
+
+      // Swap the looping phone animation (restart it from the top).
+      const phone = document.getElementById('install-phone');
+      phone.setAttribute('data-platform', platform);
+
+      // Show only the chosen platform's written steps.
+      ['ios', 'android'].forEach(p => {
+        document.getElementById('install-' + p).style.display =
+          p === platform ? '' : 'none';
+      });
+
+      // Tailor the heading + caption.
+      document.getElementById('install-title').textContent =
+        platform === 'ios' ? 'Add to your iPhone' : 'Add to your Android';
+      document.getElementById('install-caption').textContent =
+        'It installs like a normal app — its own icon, full screen, no app store.';
+
+      const openBtn = document.getElementById('install-open-app');
+      if (APP_URL) { openBtn.href = APP_URL; openBtn.style.display = ''; }
+      else { openBtn.style.display = 'none'; }
+    }
+
+    function closeInstall() {
+      document.getElementById('install-overlay').style.display = 'none';
+    }
+
+    // The mock phone's "Download the App" button reveals the device options.
+    function revealChoice() {
+      document.getElementById('phone-choice').classList.add('show');
+    }
+    function hideChoice(ev) {
+      if (!ev || ev.target.id === 'phone-choice') {
+        document.getElementById('phone-choice').classList.remove('show');
+      }
+    }
 
     // ─── Product data ──────────────────────────────────────────────────
 
