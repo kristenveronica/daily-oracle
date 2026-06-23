@@ -357,6 +357,75 @@
       .featured-wrap { margin-bottom: 52px; }
     }
 
+    /* ─── Wide desktop: centred two-column hero ──────────────────────────
+       On a real browser window the single centred column looks too skinny.
+       Here the FIRST FOLD becomes a two-column hero — headline + lead just
+       left of centre, the phone just right of centre — kept as one cohesive
+       cluster (both anchored to the page midline, not flung to the edges).
+       The hero fold sits on the lighter background so it reads as one "hero +
+       app" band, separated from the deeper products section (Field Guide &
+       Quizzes) below. Desktop-only (≥980px); phones/tablets are unchanged. */
+    @media (min-width: 980px) {
+      /* Lighter, full-bleed hero band; the deeper store background returns for
+         the products that follow on the second fold. */
+      .store-section {
+        padding: 0 0 80px;
+      }
+      .app-stage {
+        background: var(--bg);
+        min-height: 100vh;
+        margin: 0 0 48px;
+        align-items: center;
+        /* Phone sits just right of the page midline. */
+        justify-content: flex-start;
+        padding-left: calc(50% + 34px);
+      }
+      .phone-mock { width: 300px; }
+
+      /* Headline + lead: a left-aligned block whose RIGHT edge stops just left
+         of the midline, so the two columns hug the centre together. */
+      .site-header {
+        position: absolute;
+        top: 0;
+        right: 50%;
+        left: auto;
+        width: min(42%, 440px);
+        height: 100vh;
+        max-width: none;
+        margin: 0;
+        /* Top padding aligns the logo's top with the phone's top: the phone
+           (~613px tall) is vertically centred, so its top sits at 50vh−306px. */
+        padding: calc(50vh - 306px) 34px 0 0;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        box-sizing: border-box;
+        z-index: 3;
+      }
+      /* Logo at its original size, centred above the headline (headline + lead
+         stay left-aligned beneath it). */
+      .header-logo {
+        align-self: center;
+        height: 165px;
+        width: auto;
+        margin: 0 0 32px;
+      }
+      .site-header h1 {
+        font-size: clamp(2rem, 2.9vw, 2.85rem);
+        line-height: 1.16;
+        margin-bottom: 18px;
+        max-width: 100%;
+      }
+      .header-lead {
+        font-size: 1.02rem;
+        line-height: 1.7;
+        max-width: 100%;
+        margin: 0;
+      }
+    }
+
     /* ─── Product card ───────────────────────────────────────────────── */
 
     .pcard {
