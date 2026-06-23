@@ -1226,6 +1226,86 @@
 
     .upsell-cta-secondary:hover { color: var(--text); }
 
+    /* ─── About Odessa card (last row) ───────────────────────────────────
+       Informational card at the very bottom. Olive-green panel: photo on one
+       side, cream copy on the other (desktop). On mobile it stacks — photo
+       banner on top, then the copy — same green, same cream type. */
+    .about-card { max-width: 960px; margin: 0 auto; padding: 8px 24px 88px; }
+    .about-card-inner {
+      background: var(--purple-mid);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;            /* mobile: stacked */
+      box-shadow: 0 12px 44px rgba(36, 28, 24, 0.20);
+    }
+    .about-card-media { width: 100%; }
+    .about-card-media img {
+      display: block;
+      width: 100%;
+      height: 300px;                     /* mobile: photo banner */
+      object-fit: cover;
+      object-position: center 18%;
+    }
+    .about-card-text { padding: 30px 26px 34px; }
+    /* Section header INSIDE the card, centred over the text column with short
+       brass rules either side — same label language as the rest of the site,
+       but contained so it doesn't get lost on the background seam. */
+    .about-card-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .about-card-head::before,
+    .about-card-head::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--mauve);
+      opacity: 0.55;
+    }
+    .about-card-head span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mauve-light);
+      white-space: nowrap;
+    }
+    .about-card-text p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--mauve-light);
+      margin-bottom: 18px;
+    }
+    /* Key statements — elegant serif italic in warm cream, echoing the serif
+       emphasis used across the rest of the site (no stark white). */
+    .about-card-text .lead,
+    .about-card-text .about-close {
+      font-family: 'Lora', Georgia, serif;
+      font-style: italic;
+      color: var(--text-light);
+      font-size: 1.14rem;
+      line-height: 1.5;
+    }
+    .about-card-text .lead { margin: 24px 0; }
+    .about-card-text .about-close { margin-top: 28px; }
+
+    @media (min-width: 760px) {
+      .about-card-inner { flex-direction: row; align-items: stretch; }
+      .about-card-media { position: relative; width: 44%; flex-shrink: 0; min-height: 480px; }
+      .about-card-media img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-position: center 38%;
+      }
+      .about-card-text { width: 56%; align-self: center; padding: 48px 48px 50px; }
+    }
   </style>
 </head>
 <body>
@@ -1303,6 +1383,28 @@
     <div class="resources-grid" id="resources-grid"></div>
 
   </div>
+
+  <!-- About Odessa (informational card, last row) -->
+  <section class="about-card" id="about">
+    <div class="about-card-inner">
+      <div class="about-card-media">
+        <img src="assets/web images/Odessa Avatar 8.png" alt="Odessa, sitting on a park bench">
+      </div>
+      <div class="about-card-text">
+        <div class="about-card-head"><span>About Odessa</span></div>
+
+        <p>For decades, a small community of clinicians and specialists has been developing a deeper understanding of personality structures, emotional development, attachment, and personality disorders.</p>
+        <p>Much of that knowledge has remained confined to textbooks, journals, specialist training, and professional circles.</p>
+        <p class="lead">Odessa believes this is the next frontier of mental health awareness.</p>
+        <p>Twenty years ago, conversations around depression, anxiety, and suicide were far less common than they are today. Through education and awareness, those conversations entered the mainstream.</p>
+        <p>Yet despite an estimated 15–19% of people living with one of the ten recognised personality disorders, public understanding remains remarkably limited.</p>
+        <p class="lead">Odessa's work exists to bridge that gap.</p>
+        <p>Built upon specialised training with Certified Personality Disorder Specialist Gregory Lester, PhD, and immersion in this body of knowledge, Odessa translates complex psychological concepts into language that ordinary people can understand.</p>
+
+        <p class="about-close">Because understanding shouldn't belong only to clinicians.<br>It belongs to the people living it.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- Install (Add to Home Screen) modal -->
   <div class="install-overlay" id="install-overlay" style="display:none" onclick="if(event.target===this)closeInstall()">
@@ -1402,6 +1504,7 @@
       Questions? <a href="mailto:hello@thedailyoracle.org" style="color:var(--mauve-dark);text-decoration:underline;text-underline-offset:2px">Get in touch</a>
     </p>
     <div class="footer-links" style="margin-top:16px">
+      <a href="#about">About</a>
       <a href="privacy-policy.html">Privacy Policy</a>
       <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
       <a href="support.html">Support</a>
